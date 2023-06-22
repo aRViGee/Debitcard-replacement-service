@@ -13,16 +13,13 @@ stages:
   - package
   - deploy
 
-build-job:
+test-job:
   stage: compile
   script:
-    - mvn compile
+    - mvn clean test
 
-clean-build-job:
-  stage: compile
-  script:
-    - mvn clean
-    - mvn compile
+
+
 
 #sast:
 #  stage: test

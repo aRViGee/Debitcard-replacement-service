@@ -6,8 +6,24 @@
 # Note that environment variables can be set in several places
 # See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
 stages:
-- test
-sast:
-  stage: test
-include:
-- template: Security/SAST.gitlab-ci.yml
+  - compile
+  - test
+  - package
+  - deploy
+
+build-job:
+  stage: compile
+  script:
+    - mvn compile
+
+clean-build-job:
+  stage: compile
+  script:
+    - mvn clean
+    - mvn compile
+
+#sast:
+#  stage: test
+#include:
+#- template: Security/SAST.gitlab-ci.yml
+

@@ -5,9 +5,7 @@
 --author varchar(255) NOT NULL
 --);
 
---TODO - Table Card - Link card_arrangement_id to corresponding card_arrangement
---TODO - Table Card_Arrangement - Link card_id to corresponding Card
---TODO - Table Customer - allowed_actions - get an enum array working, with the allowed actions
+--TODO Add example Card(s), Customer(s) and CardArrangement(s) for testing
 CREATE TABLE IF NOT EXISTS Card(
 id SERIAL PRIMARY KEY,
 card_arrangement_id INTEGER UNIQUE NOT NULL,

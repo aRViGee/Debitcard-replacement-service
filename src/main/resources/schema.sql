@@ -22,11 +22,11 @@ CREATE TABLE IF NOT EXISTS Customer(
 customer_id SERIAL PRIMARY KEY,
 allowed_actions ENUM('replace', 'changeLimit', 'issue', 'block', 'unblock') ARRAY,
 authorization_level ENUM('level1','level2','level3','level4','level5')
-)
+);
 
 CREATE TABLE IF NOT EXISTS CardArrangement(
 --card_arrangement_id INTEGER auto_increment,
---card_arrangement_id SERIAL PRIMARY KEY,
---card_id INTEGER KEY(Card),
-customer_id INTEGER NOT NULL,
-)
+card_arrangement_id SERIAL PRIMARY KEY,
+card_id INTEGER NOT NULL,
+customer_id INTEGER NOT NULL
+);

@@ -1,8 +1,7 @@
-package com.sogyo.rvgelder.ipdebitcardreplacementflow;
+package com.sogyo.rvgelder.ipdebitcardreplacementflow.domain;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
 public class Main {

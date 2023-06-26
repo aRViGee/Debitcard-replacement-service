@@ -1,4 +1,4 @@
-package com.sogyo.rvgelder.ipdebitcardreplacementflow;
+package com.sogyo.rvgelder.ipdebitcardreplacementflow.domain;
 
 public class Card {
     private final int cardID;

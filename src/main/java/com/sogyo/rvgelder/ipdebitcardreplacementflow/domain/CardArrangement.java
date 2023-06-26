@@ -1,4 +1,4 @@
-package com.sogyo.rvgelder.ipdebitcardreplacementflow;
+package com.sogyo.rvgelder.ipdebitcardreplacementflow.domain;
 
 public class CardArrangement {
     private final int cardArrangementID;

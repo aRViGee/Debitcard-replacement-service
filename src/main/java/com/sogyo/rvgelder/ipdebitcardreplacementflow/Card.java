@@ -20,15 +20,4 @@ public class Card {
         this.endDate = endDate;
         this.status = status;
     }
-
-    @Override
-    public String toString() {
-        return "Card{" +
-                "cardID=" + cardID +
-                ", cardArrangementID=" + cardArrangementID +
-                ", startDate='" + startDate + '\'' +
-                ", endDate='" + endDate + '\'' +
-                ", status=" + status +
-                '}';
-    }
 }

@@ -7,9 +7,10 @@ import java.util.ArrayList;
 @Entity(name="Card_Arrangement")
 public class CardArrangement {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "customer_id", nullable = false)
+    @ManyToOne(targetEntity = Customer.class)
+    @JoinColumn(name = "customer_id", nullable = false)
     private int customerID;
     @OneToMany(targetEntity = Card.class)
     @Column(name = "card_list", nullable = false)
@@ -23,4 +24,4 @@ public class CardArrangement {
         this.cardArrayList = cardArrayList;
     }
 }
-
+//TODO Are the relationships working correctly?

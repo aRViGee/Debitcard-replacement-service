@@ -1,6 +1,5 @@
 package com.sogyo.rvgelder.ipdebitcardreplacementflow.entity;
 
-import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.AuthorizationLevel;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
@@ -10,11 +9,11 @@ import java.util.stream.Stream;
     public class AuthorizationLevelConverter implements AttributeConverter<AuthorizationLevel, Integer> {
 
         @Override
-        public Integer convertToDatabaseColumn(AuthorizationLevel authorizationLevel) {
-            if (authorizationLevel == null) {
+        public Integer convertToDatabaseColumn(AuthorizationLevel level) {
+            if (level == null) {
                 return null;
             }
-            return authorizationLevel.getLevel();
+            return level.getLevel();
         }
 
         @Override

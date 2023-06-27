@@ -4,7 +4,7 @@ public enum AuthorizationLevel {
     LEVEL_1(1),
     LEVEL_2(2),
     LEVEL_3(3);
-//    TODO allowedActions implementeren
+
 
     private Integer level;
 
@@ -17,3 +17,4 @@ public enum AuthorizationLevel {
     }
 
 }
+//    TODO implement allowedActions

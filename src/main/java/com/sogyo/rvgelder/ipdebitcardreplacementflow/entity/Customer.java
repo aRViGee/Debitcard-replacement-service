@@ -9,7 +9,7 @@ import java.util.ArrayList;
 @Table(name="Customer")
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Convert(converter = AuthorizationLevelConverter.class)
     @Column(name = "authorization_level", nullable = false, length = 1)
@@ -20,9 +20,4 @@ public class Customer {
 
     public Customer() {}
 
-    public Customer(int id, AuthorizationLevel authorizationLevel, ArrayList<CardArrangement> cardArrangementArrayList) {
-        this.id = id;
-        this.authorizationLevel = authorizationLevel;
-        this.cardArrangementArrayList = cardArrangementArrayList;
-    }
 }

@@ -1,23 +1,23 @@
-CREATE TABLE IF NOT EXISTS Customer(
-id SERIAL NOT NULL PRIMARY KEY,
-authorization_level ENUM('1','2','3')
-);
-
-CREATE TABLE IF NOT EXISTS CardArrangement(
-id SERIAL NOT NULL PRIMARY KEY,
-customer_id INTEGER NOT NULL,
-CONSTRAINT FK_CardArrangement_Customer FOREIGN KEY (customer_id) REFERENCES Customer(id)
-);
-
-
-CREATE TABLE IF NOT EXISTS Card(
-id SERIAL NOT NULL PRIMARY KEY,
-card_arrangement_id INTEGER UNIQUE NOT NULL,
-start_date DATE NOT NULL,
-end_date DATE NOT NULL,
-status ENUM('ACTIVE', 'INACTIVE', 'BLOCKED', 'EXPIRED') NOT NULL,
-CONSTRAINT FK_Card_CardArrangement FOREIGN KEY (card_arrangement_id) REFERENCES CardArrangement(id)
-);
+--CREATE TABLE IF NOT EXISTS Customer(
+--id SERIAL NOT NULL PRIMARY KEY,
+--authorization_level ENUM('1','2','3')
+--);
+--
+--CREATE TABLE IF NOT EXISTS CardArrangement(
+--id SERIAL NOT NULL PRIMARY KEY,
+--customer_id INTEGER NOT NULL,
+--CONSTRAINT FK_CardArrangement_Customer FOREIGN KEY (customer_id) REFERENCES Customer(id)
+--);
+--
+--
+--CREATE TABLE IF NOT EXISTS Card(
+--id SERIAL NOT NULL PRIMARY KEY,
+--card_arrangement_id INTEGER UNIQUE NOT NULL,
+--start_date DATE NOT NULL,
+--end_date DATE NOT NULL,
+--status ENUM('ACTIVE', 'INACTIVE', 'BLOCKED', 'EXPIRED') NOT NULL,
+--CONSTRAINT FK_Card_CardArrangement FOREIGN KEY (card_arrangement_id) REFERENCES CardArrangement(id)
+--);
 
 --ALTER TABLE Card
 --ADD CONSTRAINT FK_Card_CardArrangement FOREIGN KEY (card_arrangement_id)
@@ -27,8 +27,8 @@ CONSTRAINT FK_Card_CardArrangement FOREIGN KEY (card_arrangement_id) REFERENCES 
 
 --Fill the tables
 --INSERT INTO Customer(authorization_level)
---VALUES(ARRAY['BLOCK','UNBLOCK'],'1');
---
+--VALUES(1);
+
 --INSERT INTO CardArrangement(customer_id)
 --VALUES(1);
 --

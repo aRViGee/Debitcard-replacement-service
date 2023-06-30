@@ -12,12 +12,11 @@ import java.util.Objects;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-@Autowired
-private CustomerRepository customerRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @Override
     public Customer findById(Integer customerId) {
-
         return customerRepository.findById(customerId).get();
     }
 
@@ -27,24 +26,23 @@ private CustomerRepository customerRepository;
         return customerRepository.save(customer);
     }
 
-//    Read operation
+    //    Read operation
     @Override
     public List<Customer> fetchCustomerList() {
-        return (List<Customer>) customerRepository.findAll();
+        return customerRepository.findAll();
     }
 
-//    Update operation
+    //    Update operation
     @Override
-    public Customer
-    updateCustomer(Customer customer,
-                     Integer customerId)
-    {
+    public Customer updateCustomer(
+            Customer customer,
+            Integer customerId) {
 
         Customer customerDB = customerRepository.findById(customerId).get();
 
 
 //        if (Objects.nonNull(customer.getAuthorizationLevel()) && !"".equalsIgnoreCase(customer.getAuthorizationLevel())) {
-            customerDB.setAuthorizationLevel(customer.getAuthorizationLevel());
+        customerDB.setAuthorizationLevel(customer.getAuthorizationLevel());
 //        }
 
         if (Objects.nonNull(
@@ -58,7 +56,7 @@ private CustomerRepository customerRepository;
         return customerRepository.save(customerDB);
     }
 
-//    Delete operation
+    //    Delete operation
     @Override
     public void deleteCustomerById(Integer customerId) {
         customerRepository.deleteById(customerId);

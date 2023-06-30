@@ -12,18 +12,36 @@ public class CardArrangement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne(targetEntity = Customer.class)
-    @JoinColumn(name = "customer_id", nullable = false)
-    private int customerID;
-    @OneToMany(targetEntity = Card.class)
-    @Column(name = "card_list", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Customer.class)
+    @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false /*, length = 25*/)
+    private final Customer customer;
+    @OneToMany(mappedBy = "cardArrangement", fetch = FetchType.EAGER, targetEntity = Card.class)
     private List<Card> cards;
 
-    public CardArrangement(){}
+    public CardArrangement(Customer customer) {
+        if (customer == null) {
+            throw new RuntimeException("Customer must be specified");
+        }
+        this.customer = customer;
+    }
 
-    public CardArrangement(int id, int customerID, ArrayList<Card> cards) {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
         this.id = id;
-        this.customerID = customerID;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(List<Card> cards) {
         this.cards = cards;
     }
 }

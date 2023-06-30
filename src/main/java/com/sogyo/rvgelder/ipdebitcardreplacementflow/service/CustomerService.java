@@ -15,9 +15,9 @@ public interface CustomerService {
     List<Customer> fetchCustomerList();
 
 //    Update operation
-    Customer updateCustomer(Customer customer, Integer id);
+    Customer updateCustomer(Customer customer, Integer customerId);
 
 //    Delete operation
-    void deleteCustomerById(Integer id);
+    void deleteCustomerById(Integer customerId);
 
 }

@@ -2,10 +2,7 @@ package com.sogyo.rvgelder.ipdebitcardreplacementflow.entity;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
-
-//TODO check if the relations with arrayList table are correct when there are Customer rows.
 
 @Entity
 @Table(name="Customer")
@@ -16,22 +13,18 @@ public class Customer {
     @Convert(converter = AuthorizationLevelConverter.class)
     @Column(name = "authorization_level", nullable = false, length = 1)
     private AuthorizationLevel authorizationLevel;
-    @OneToMany(targetEntity = CardArrangement.class)
-    @Column(name = "card_arrangement_list", nullable = true /*, length = 25*/)
-    private List<CardArrangement> cardArrangements;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<CardArrangement> cardArrangements; //TODO Deze lijst verschijnt niet als column in de Customer table. Klopt dit en hoe roep ik deze nu aan?
 
     public Customer() {}
 
     public Customer(AuthorizationLevel authorizationLevel) {
+
         this.authorizationLevel = authorizationLevel;
     }
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public AuthorizationLevel getAuthorizationLevel() {
@@ -49,9 +42,5 @@ public class Customer {
     public void setCardArrangements(List<CardArrangement> cardArrangements) {
         this.cardArrangements = cardArrangements;
     }
-    //    public record CustomerTest(
-//            @Id Integer id,
-//            @Convert(converter = AuthorizationLevelConverter.class) AuthorizationLevel authorizationLevel,
-//            ArrayList<CardArrangement> cardArrangementArrayList
-//            ){}
+
 }

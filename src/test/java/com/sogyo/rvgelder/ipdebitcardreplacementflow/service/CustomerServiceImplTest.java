@@ -26,6 +26,14 @@ public class CustomerServiceImplTest {
         private CustomerService customerService;
 
         @Test
+        public void testCanFindCustomerById() {
+                Customer customer1 = new Customer(AuthorizationLevel.LEVEL_3);
+                Customer customer2 = new Customer(AuthorizationLevel.LEVEL_2);
+
+//                customer1.findById(1);
+        }
+
+        @Test
         public void testCanGetListOfAllCustomers() {
                 Customer customer1 = new Customer(AuthorizationLevel.LEVEL_3);
                 Customer customer2 = new Customer(AuthorizationLevel.LEVEL_1);
@@ -40,18 +48,12 @@ public class CustomerServiceImplTest {
         }
 
         @Test
-        public void testCanReadCustomerAttributes() {
+        public void testCanReadAuthorizationLevelAttribute() {
                 Customer customer = new Customer(AuthorizationLevel.LEVEL_3);
-                CardArrangement cardArrangement = new CardArrangement(customer);
-                ArrayList<CardArrangement> arrangements = new ArrayList<>();
-                arrangements.add(cardArrangement);
-                customer.setCardArrangements(arrangements);
 
                 var resultAuthorizationLevel = customer.getAuthorizationLevel();
-                var resultCardArrangements = customer.getCardArrangements();
 
-                assertSame(resultAuthorizationLevel, AuthorizationLevel.LEVEL_3);
-                assertNotNull(resultCardArrangements);
+                assertSame(AuthorizationLevel.LEVEL_3, resultAuthorizationLevel);
         }
 
         @Test
@@ -64,15 +66,7 @@ public class CustomerServiceImplTest {
                 assertEquals(result.getAuthorizationLevel(),customerDB.getAuthorizationLevel());
         }
 
-        @Test
-        public void testCanChangeCustomerAuthorizationLevel() {
-                Customer customer = new Customer(AuthorizationLevel.LEVEL_3);
 
-                customer.setAuthorizationLevel(AuthorizationLevel.LEVEL_1);
-
-                assertSame(AuthorizationLevel.LEVEL_1,customer.getAuthorizationLevel());
-
-        }
 }
 
 

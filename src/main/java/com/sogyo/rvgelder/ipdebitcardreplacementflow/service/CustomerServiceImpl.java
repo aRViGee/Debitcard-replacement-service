@@ -1,10 +1,12 @@
 package com.sogyo.rvgelder.ipdebitcardreplacementflow.service;
 
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.AuthorizationLevel;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.Customer;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,6 +22,7 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findById(customerId).get();
     }
 
+
     //    Save operation
     @Override
     public Customer saveCustomer(Customer customer) {
@@ -32,29 +35,30 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findAll();
     }
 
-    //    Update operation
-    @Override
-    public Customer updateCustomer(
-            Customer customer,
-            Integer customerId) {
-
-        Customer customerDB = customerRepository.findById(customerId).get();
-
-
-//        if (Objects.nonNull(customer.getAuthorizationLevel()) && !"".equalsIgnoreCase(customer.getAuthorizationLevel())) {
-        customerDB.setAuthorizationLevel(customer.getAuthorizationLevel());
-//        }
-
-        if (Objects.nonNull(
-                customer.getCardArrangements())
-                /*&& !"".equalsIgnoreCase(
-                customer.getCardArrangementArrayList())*/) {
-            customerDB.setCardArrangements(
-                    customer.getCardArrangements());
-        }
-
-        return customerRepository.save(customerDB);
-    }
+//    //    Update operation
+//    @Override
+//    public Customer updateCustomer(
+//            /*Customer customer,*/
+//            Integer customerId, AuthorizationLevel authorizationLevel) {
+//
+//        Customer customerDB = customerRepository.findById(customerId).get();
+//
+//
+//
+////        if (Objects.nonNull(customer.getAuthorizationLevel()) && !"".equalsIgnoreCase(customer.getAuthorizationLevel())) {
+//        customerDB.setAuthorizationLevel(authorizationLevel);
+////        }
+//
+//        /*if (Objects.nonNull(
+//                customer.getCardArrangements())
+//                *//*&& !"".equalsIgnoreCase(
+//                customer.getCardArrangementArrayList())*//*) {
+//            customerDB.setCardArrangements(
+//                    customer.getCardArrangements());
+//        }*/
+//
+//        return customerRepository.save(customerDB);
+//    }
 
     //    Delete operation
     @Override

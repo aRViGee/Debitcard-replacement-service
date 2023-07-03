@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CardArrangementService {
 
-    CardArrangement findById(Integer cardArrangementId);
+    CardArrangement findCardArrangement(Integer cardArrangementId);
 
     //    Save operation
     CardArrangement saveCardArrangement(CardArrangement cardArrangement);

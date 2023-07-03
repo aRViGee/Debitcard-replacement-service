@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CustomerService {
 
-    Customer findById(Integer customerId);
+    Customer findCustomer(Integer customerId);
 
 //    Save operation
     Customer saveCustomer(Customer customer);

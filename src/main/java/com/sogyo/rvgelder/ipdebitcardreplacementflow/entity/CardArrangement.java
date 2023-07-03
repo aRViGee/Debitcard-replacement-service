@@ -29,13 +29,11 @@ public class CardArrangement {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId(int id) {this.id = id;}
 
-    public Customer getCustomer() {
-        return customer;
-    }
+//    public Customer getCustomer() {
+//        return customer;
+//    }
 
     public List<Card> getCards() {
         return cards;

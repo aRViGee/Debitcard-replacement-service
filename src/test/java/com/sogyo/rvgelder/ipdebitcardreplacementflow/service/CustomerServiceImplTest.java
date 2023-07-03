@@ -2,16 +2,15 @@ package com.sogyo.rvgelder.ipdebitcardreplacementflow.service;
 
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.Main;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.AuthorizationLevel;
-import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.CardArrangement;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.Customer;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.repository.CustomerRepository;
+import jakarta.annotation.Resource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -25,26 +24,34 @@ public class CustomerServiceImplTest {
         @Autowired
         private CustomerService customerService;
 
+        @Resource
+        private CustomerRepository customerRepository;
+
         @Test
         public void testCanFindCustomerById() {
                 Customer customer1 = new Customer(AuthorizationLevel.LEVEL_3);
                 Customer customer2 = new Customer(AuthorizationLevel.LEVEL_2);
+                customerService.saveCustomer(customer1);
+                customerService.saveCustomer(customer2);
 
-//                customer1.findById(1);
+                var result = customerService.findCustomer(1);
+                System.out.println(customerRepository.findAll());
+
+                assertEquals(customer1,result);
         }
 
         @Test
         public void testCanGetListOfAllCustomers() {
                 Customer customer1 = new Customer(AuthorizationLevel.LEVEL_3);
-                Customer customer2 = new Customer(AuthorizationLevel.LEVEL_1);
-                Customer customer3 = new Customer(AuthorizationLevel.LEVEL_2);
                 customerService.saveCustomer(customer1);
+                Customer customer2 = new Customer(AuthorizationLevel.LEVEL_1);
                 customerService.saveCustomer(customer2);
+                Customer customer3 = new Customer(AuthorizationLevel.LEVEL_2);
                 customerService.saveCustomer(customer3);
 
-                var result = customerService.fetchCustomerList();
+                var result = customerService.fetchCustomerList().size();
 
-                assertEquals(3, result.size());
+                assertEquals(3, result);
         }
 
         @Test
@@ -60,12 +67,16 @@ public class CustomerServiceImplTest {
         public void testCanAddCustomerToDatabase() {
                 Customer customer = new Customer(AuthorizationLevel.LEVEL_2);
                 var result = customerService.saveCustomer(customer);
-                var customerDB = customerService.findById(result.getId());
+                var customerDB = customerService.findCustomer(result.getId());
 
                 assertTrue(result.getId() > 0);
                 assertEquals(result.getAuthorizationLevel(),customerDB.getAuthorizationLevel());
         }
 
+        @Test
+        public void testCanDeleteCustomer() {
+
+        }
 
 }
 

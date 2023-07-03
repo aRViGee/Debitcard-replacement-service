@@ -15,7 +15,7 @@ public class CardArrangementServiceImpl implements CardArrangementService {
     private CardArrangementRepository cardArrangementRepository;
 
     @Override
-    public CardArrangement findById(Integer cardArrangementId) {
+    public CardArrangement findCardArrangement(Integer cardArrangementId) {
         return cardArrangementRepository.findById(cardArrangementId).get();
     }
 

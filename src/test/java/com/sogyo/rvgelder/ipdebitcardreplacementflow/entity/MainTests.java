@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MainTests {
 
 	@Test
-	void TestingWorks() {
+	void TestingFrameworkWorks() {
 
 		assertTrue(true);
 	}

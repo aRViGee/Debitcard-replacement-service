@@ -1,14 +1,12 @@
 package com.sogyo.rvgelder.ipdebitcardreplacementflow.service;
 
-import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.AuthorizationLevel;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.Customer;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.NoSuchElementException;
 
 
 @Service
@@ -17,9 +15,10 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
+
     @Override
-    public Customer findById(Integer customerId) {
-        return customerRepository.findById(customerId).get();
+    public Customer findCustomer(Integer customerId) {
+        return customerRepository.findById(customerId).orElseThrow(() -> new NoSuchElementException());
     }
 
 

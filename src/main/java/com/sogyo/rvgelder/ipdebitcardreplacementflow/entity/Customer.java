@@ -3,6 +3,7 @@ package com.sogyo.rvgelder.ipdebitcardreplacementflow.entity;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name="Customer")
@@ -43,4 +44,16 @@ public class Customer {
 //        this.cardArrangements = cardArrangements;
 //    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return id == customer.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

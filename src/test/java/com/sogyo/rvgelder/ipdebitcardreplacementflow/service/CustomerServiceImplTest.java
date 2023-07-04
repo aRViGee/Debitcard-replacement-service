@@ -8,17 +8,21 @@ import jakarta.annotation.Resource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.*;
 
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Main.class)
-
-@TestPropertySource(locations = "classpath:application.properties")
+@Transactional
+@TestPropertySource(locations = "classpath:application-test.properties")
 public class CustomerServiceImplTest {
 
         @Autowired
@@ -75,6 +79,13 @@ public class CustomerServiceImplTest {
 
         @Test
         public void testCanDeleteCustomer() {
+                Customer customer1 = new Customer(AuthorizationLevel.LEVEL_3);
+                customerService.saveCustomer(customer1);
+                Customer customer2 = new Customer(AuthorizationLevel.LEVEL_1);
+                customerService.saveCustomer(customer2);
+
+                customerService.deleteCustomerById(1);
+
 
         }
 

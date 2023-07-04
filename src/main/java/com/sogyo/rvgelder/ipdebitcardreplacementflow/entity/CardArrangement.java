@@ -2,10 +2,7 @@ package com.sogyo.rvgelder.ipdebitcardreplacementflow.entity;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
-
-//TODO check if the relations with arrayList table are correct when there are CardArrangement rows.
 
 @Entity(name="Card_Arrangement")
 public class CardArrangement {
@@ -18,6 +15,8 @@ public class CardArrangement {
     @OneToMany(mappedBy = "cardArrangement", fetch = FetchType.EAGER, targetEntity = Card.class)
     private List<Card> cards;
 
+//    public CardArrangement() {}
+
     public CardArrangement(Customer customer) {
         if (customer == null) {
             throw new RuntimeException("Customer must be specified");
@@ -29,11 +28,7 @@ public class CardArrangement {
         return id;
     }
 
-    public void setId(int id) {this.id = id;}
-
-//    public Customer getCustomer() {
-//        return customer;
-//    }
+    public Customer getCustomer() {return customer;}
 
     public List<Card> getCards() {
         return cards;

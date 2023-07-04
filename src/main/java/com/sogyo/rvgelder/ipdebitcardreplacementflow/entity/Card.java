@@ -30,4 +30,26 @@ public class Card {
         this.endDate = endDate;
         this.status = status;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public CardArrangement getCardArrangement() {
+        return cardArrangement;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+
 }

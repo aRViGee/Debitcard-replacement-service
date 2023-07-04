@@ -1,7 +1,10 @@
 package com.sogyo.rvgelder.ipdebitcardreplacementflow.service;
 
+
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.CardArrangement;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.Customer;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.repository.CustomerRepository;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.repository.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,9 +33,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     //    Read operation
     @Override
-    public List<Customer> fetchCustomerList() {
-        return customerRepository.findAll();
-    }
+    public List<Customer> fetchCustomerList() {return customerRepository.findAll();}
+
+//    @Override
+//    public List<CardArrangement> fetchCardArrangements(Integer customerId) {
+//        return;
+//    }
 
 //    //    Update operation
 //    @Override
@@ -65,6 +71,29 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.deleteById(customerId);
     }
 
+    public void replaceCard(Integer customerId, Integer cardId) {
+        if (verifyCardReplacement(customerId,cardId)) {
+            if (true/*TODO - External authorization implementation*/) {
+//                TODO - Fulfillment:
+//                  TODO - Fulfillment - Create new card
+//                      TODO - Fulfillment - if new card created: set end_date current card
+            }
+//
+        }
+    }
+
+    private boolean verifyCardReplacement(Integer customerId, Integer cardId) {
+        return (isOwnerOfCard(customerId,cardId)) && (isAllowedToReplace(customerId,cardId));
+    }
+
+    private boolean isAllowedToReplace(Integer customerId, Integer cardId) {
+        return false;
+    }
+
+    private boolean isOwnerOfCard(Integer customerId, Integer cardId) {
+
+        return false;
+    }
 }
 
 

@@ -2,6 +2,7 @@ package com.sogyo.rvgelder.ipdebitcardreplacementflow.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,7 +16,7 @@ public class Customer {
     @Column(name = "authorization_level", nullable = false, length = 1)
     private AuthorizationLevel authorizationLevel;
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<CardArrangement> cardArrangements; //TODO Deze lijst verschijnt niet als column in de Customer table. Klopt dit en hoe roep ik deze nu aan?
+    public List<CardArrangement> cardArrangements = new ArrayList<>();
 
     public Customer() {}
 

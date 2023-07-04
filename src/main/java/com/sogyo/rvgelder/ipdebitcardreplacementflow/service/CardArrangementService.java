@@ -1,6 +1,8 @@
 package com.sogyo.rvgelder.ipdebitcardreplacementflow.service;
 
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.Card;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.CardArrangement;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.Customer;
 
 import java.util.List;
 
@@ -14,10 +16,16 @@ public interface CardArrangementService {
     //    Read operation
     List<CardArrangement> fetchCardArrangementList();
 
-    //    Update operation
-    CardArrangement updateCardArrangement(CardArrangement cardArrangement, Integer cardArrangementId);
+//    List<Card> fetchCardList();
 
-    //    Delete operation
-    void deleteCardArrangementById(Integer cardArrangementId);
+//    Customer getCustomer();
+
+
+
+//    //    Update operation
+//    CardArrangement updateCardArrangement(CardArrangement cardArrangement, Integer cardArrangementId);
+//
+//    //    Delete operation
+//    void deleteCardArrangementById(Integer cardArrangementId);
 
 }

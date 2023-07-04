@@ -1,5 +1,10 @@
 package com.sogyo.rvgelder.ipdebitcardreplacementflow;
 
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.AuthorizationLevel;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.CardArrangement;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.Customer;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.CustomerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -7,6 +12,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Main {
 
 	public static void main(String[] args) {
+
+
 		SpringApplication.run(Main.class, args);
 	}
 

@@ -3,6 +3,7 @@ package com.sogyo.rvgelder.ipdebitcardreplacementflow.service;
 
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.CardArrangement;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.Customer;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.repository.CardArrangementRepository;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.repository.CustomerRepository;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.repository.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private CardArrangementRepository cardArrangementRepository;
 
 
     @Override
@@ -31,6 +34,7 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.save(customer);
     }
 
+
     //    Read operation
     @Override
     public List<Customer> fetchCustomerList() {return customerRepository.findAll();}
@@ -40,7 +44,7 @@ public class CustomerServiceImpl implements CustomerService {
 //        return;
 //    }
 
-//    //    Update operation
+//    Update operation
 //    @Override
 //    public Customer updateCustomer(
 //            /*Customer customer,*/

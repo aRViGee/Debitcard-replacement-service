@@ -2,6 +2,7 @@ package com.sogyo.rvgelder.ipdebitcardreplacementflow.entity;
 
 import jakarta.persistence.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -13,18 +14,26 @@ public class Card {
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = CardArrangement.class)
     @JoinColumn(name = "card_arrangement_id", referencedColumnName = "id", nullable = false/*, length = 25*/)
     private CardArrangement cardArrangement;
-    @Column(name = "start_date", nullable = false)
+    @Column(name = "start_date", nullable = true)
     @Temporal(TemporalType.DATE)
-    private java.util.Date startDate; /*TODO How do I convert this to the database's 'date' format? Separate the month number and year?*/
-    @Column(name = "end_date", nullable = false)
+    private Date startDate;
+    @Column(name = "end_date", nullable = true)
     @Temporal(TemporalType.DATE)
-    private java.util.Date endDate; /*TODO idem TODO startDate*/
+    private Date endDate;
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private Status status;
 
-    public Card(int id, CardArrangement cardArrangement, Date startDate, Date endDate, Status status) {
-        this.id = id;
+    public Card(Status status) {
+        this.status = status;
+    }
+
+    public Card(CardArrangement cardArrangement, Status status) {
+        this.cardArrangement = cardArrangement;
+        this.status = status;
+    }
+
+        public Card(CardArrangement cardArrangement, Date startDate, Date endDate, Status status) {
         this.cardArrangement = cardArrangement;
         this.startDate = startDate;
         this.endDate = endDate;

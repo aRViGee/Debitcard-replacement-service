@@ -23,10 +23,7 @@ public class CardArrangementServiceImpl implements CardArrangementService {
 
 //    Save operation
     @Override
-    public CardArrangement saveCardArrangement(CardArrangement cardArrangement) {
-
-        return cardArrangementRepository.save(cardArrangement);
-    }
+    public CardArrangement saveCardArrangement(CardArrangement cardArrangement) {return cardArrangementRepository.save(cardArrangement);}
 
 //    Read operation
     @Override

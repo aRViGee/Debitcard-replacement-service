@@ -4,14 +4,22 @@ Endpoints aanmaken en organiseren voor de replace flow van een debitcard, middel
 
 MoSCoW:
 - Must: 
-    - In-memory database (H2) voor data persistence.
-    - Endpoints maken vanuit de flow ()
-    
+  - User gets verified before being able to request a new card.
+  - The application waits for external authorisation.
+  - If the user is eligible, the replacement request gets fulfilled by issuing a new debit card.
+  - Endpoints in place for the replacement flow.
+  - Interaction possible with a database for data ‘persistence’.
+
+- Should:
+  - AllowedActions is determined by the AuthorizationLevel.
+
 
 Software stack:
 - Java
 - Spring Boot
-- In-memory database H2
+- Hibernate
+- JPA
+- H2
 - Maven
 - JUnit
 
@@ -22,5 +30,5 @@ Persoonlijk leerdoel:
 
 Technisch leerdoel:
 - Bekend raken met Spring Boot en het opzetten van een service middels deze tool.
-- Bekend raken met ING Baker (https://github.com/ing-bank/baker)
-- TDD
+- ~~Bekend raken met ING Baker (https://github.com/ing-bank/baker)~~
+- Integratie met een database.

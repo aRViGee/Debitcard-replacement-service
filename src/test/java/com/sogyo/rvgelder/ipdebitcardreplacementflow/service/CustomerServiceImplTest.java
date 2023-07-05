@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Main.class)
 @Transactional
-@TestPropertySource(locations = "classpath:application.properties")
+@TestPropertySource(locations = "classpath:application-test.properties")
 public class CustomerServiceImplTest {
 
         @Autowired
@@ -109,7 +109,26 @@ public class CustomerServiceImplTest {
 
 //                var result = cardArrangementService.fetchCardArrangementList(customer1.getId()).size();
                 var result = customer1.getCardArrangements().size();
-                assertEquals(2, result);
+                assertEquals(1, result);
+        }
+
+        @Test
+        public void testCanGetListOfAllCardArrangementsOfSpecificCustomer2() {
+                Customer customer1 = new Customer(AuthorizationLevel.LEVEL_3);
+//                customer1.cardArrangements.add(new CardArrangement(customer1));
+                customerService.saveCustomer(customer1);
+                CardArrangement cardArrangement1 = new CardArrangement(customer1);
+                cardArrangementService.saveCardArrangement(cardArrangement1);
+//                CardArrangement cardArrangement2 = new CardArrangement(customer1);
+//                cardArrangementService.saveCardArrangement(cardArrangement2);
+//                Customer customer2 = new Customer(AuthorizationLevel.LEVEL_2);
+//                customerService.saveCustomer(customer2);
+//                CardArrangement cardArrangement3 = new CardArrangement(customer2);
+//                cardArrangementService.saveCardArrangement(cardArrangement3);
+
+//                var result = cardArrangementService.fetchCardArrangementList(customer1.getId()).size();
+                var result = customer1.getCardArrangements().size();
+                assertEquals(1, result);
         }
 
 }

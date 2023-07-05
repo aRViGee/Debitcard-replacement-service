@@ -2,6 +2,7 @@ package com.sogyo.rvgelder.ipdebitcardreplacementflow.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name="Card_Arrangement")
@@ -13,7 +14,7 @@ public class CardArrangement {
     @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false /*, length = 25*/)
     private final Customer customer;
     @OneToMany(mappedBy = "cardArrangement", fetch = FetchType.EAGER, targetEntity = Card.class)
-    private List<Card> cards;
+    private List<Card> cards = new ArrayList<>();
 
 //    public CardArrangement() {}
 

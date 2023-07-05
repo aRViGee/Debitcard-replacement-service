@@ -33,17 +33,9 @@ public class Customer {
         return authorizationLevel;
     }
 
-//    public void setAuthorizationLevel(AuthorizationLevel authorizationLevel) {
-//        this.authorizationLevel = authorizationLevel;
-//    }
-
     public List<CardArrangement> getCardArrangements() {
         return cardArrangements;
     }
-
-//    public void setCardArrangements(List<CardArrangement> cardArrangements) {
-//        this.cardArrangements = cardArrangements;
-//    }
 
     @Override
     public boolean equals(Object o) {

@@ -26,4 +26,11 @@ public class CardServiceImpl implements CardService {
 
     private void findOwnCardArrangement() {
     }
+
+//    Save operation
+
+    @Override
+    public Card saveCard(Card card) {
+        return cardRepository.save(card);
+    }
 }

@@ -1,5 +1,6 @@
 package com.sogyo.rvgelder.ipdebitcardreplacementflow.entity;
 
+
 import jakarta.persistence.*;
 
 import java.text.SimpleDateFormat;
@@ -25,4 +26,8 @@ public class Card {
 
     public Card(){}
 
+    public Card(String cardNumber, Status status) {
+        this.cardNumber = cardNumber;
+        this.status = status;
+    }
 }

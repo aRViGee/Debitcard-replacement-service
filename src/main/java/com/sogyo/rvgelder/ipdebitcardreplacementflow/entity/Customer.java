@@ -1,10 +1,11 @@
 package com.sogyo.rvgelder.ipdebitcardreplacementflow.entity;
 
+
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
 
 @Entity
 @Table(name="Customer")
@@ -17,10 +18,20 @@ public class Customer {
     @Convert(converter = AuthorizationLevelConverter.class)
     @Column(name = "authorization_level", nullable = false, length = 1)
     private AuthorizationLevel authorizationLevel;
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-//    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    public List<CardArrangement> cardArrangements = new ArrayList<>();
+//    @OneToOne/*(*//*mappedBy = "customer",*//* cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)*/
+    @OneToMany(/*mappedBy = "customer", */cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @Column(name = "cardArrangements")
+    private List<CardArrangement> cardArrangements = new ArrayList<>();
 
     public Customer() {}
 
+    public Customer(String customerNumber, AuthorizationLevel authorizationLevel, List<CardArrangement> cardArrangements) {
+        this.customerNumber = customerNumber;
+        this.authorizationLevel = authorizationLevel;
+        this.cardArrangements = cardArrangements;
+    }
+
+    public List<CardArrangement> getCardArrangements() {
+        return cardArrangements;
+    }
 }

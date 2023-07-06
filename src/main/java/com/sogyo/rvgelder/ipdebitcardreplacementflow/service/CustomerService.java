@@ -8,24 +8,6 @@ import java.util.List;
 
 public interface CustomerService {
 
-    Customer findCustomer(Integer customerId);
-
-//    Save operation
-    Customer saveCustomer(Customer customer);
-
-//    Read operation
-    List<Customer> fetchCustomerList();
-
-//    List<CardArrangement> fetchCardArrangements(Integer customerId);
-
-////    Update operation
-//    Customer updateCustomer(Customer customer, Integer customerId);
-
-//    Delete operation
-    void deleteCustomerById(Integer customerId);
-
-//    Replacement operations
-    void replaceCard(Integer customerId, Integer cardId);
-
+    void replaceCard(String customerNumber, String cardNumber);
 
 }

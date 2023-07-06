@@ -18,65 +18,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
-    @Autowired
-    private CardArrangementRepository cardArrangementRepository;
 
-
-    @Override
-    public Customer findCustomer(Integer customerId) {
-        return customerRepository.findById(customerId).orElseThrow(() -> new NoSuchElementException());
-    }
-
-
-    //    Save operation
-    @Override
-    public Customer saveCustomer(Customer customer) {
-        return customerRepository.save(customer);
-    }
-
-
-    //    Read operation
-    @Override
-    public List<Customer> fetchCustomerList() {return customerRepository.findAll();}
-
-//    @Override
-//    public List<CardArrangement> fetchCardArrangements(Integer customerId) {
-//        return;
-//    }
-
-//    Update operation
-//    @Override
-//    public Customer updateCustomer(
-//            /*Customer customer,*/
-//            Integer customerId, AuthorizationLevel authorizationLevel) {
-//
-//        Customer customerDB = customerRepository.findById(customerId).get();
-//
-//
-//
-////        if (Objects.nonNull(customer.getAuthorizationLevel()) && !"".equalsIgnoreCase(customer.getAuthorizationLevel())) {
-//        customerDB.setAuthorizationLevel(authorizationLevel);
-////        }
-//
-//        /*if (Objects.nonNull(
-//                customer.getCardArrangements())
-//                *//*&& !"".equalsIgnoreCase(
-//                customer.getCardArrangementArrayList())*//*) {
-//            customerDB.setCardArrangements(
-//                    customer.getCardArrangements());
-//        }*/
-//
-//        return customerRepository.save(customerDB);
-//    }
-
-    //    Delete operation
-    @Override
-    public void deleteCustomerById(Integer customerId) {
-        customerRepository.deleteById(customerId);
-    }
-
-    public void replaceCard(Integer customerId, Integer cardId) {
-        if (verifyCardReplacement(customerId,cardId)) {
+    public void replaceCard(String customerNumber, String cardNumber) {
+        if (verifyCardReplacement(customerNumber,cardNumber)) {
             if (true/*TODO - External authorization implementation*/) {
 //                TODO - Fulfillment:
 //                  TODO - Fulfillment - Create new card
@@ -86,15 +30,15 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
-    private boolean verifyCardReplacement(Integer customerId, Integer cardId) {
-        return (isOwnerOfCard(customerId,cardId)) && (isAllowedToReplace(customerId,cardId));
+    private boolean verifyCardReplacement(String customerNumber, String cardNumber) {
+        return (isOwnerOfCard(customerNumber,cardNumber)) && (isAllowedToReplace(customerNumber,cardNumber));
     }
 
-    private boolean isAllowedToReplace(Integer customerId, Integer cardId) {
+    private boolean isAllowedToReplace(String customerNumber, String cardNumber) {
         return false;
     }
 
-    private boolean isOwnerOfCard(Integer customerId, Integer cardId) {
+    private boolean isOwnerOfCard(String customerNumber, String cardNumber) {
 
         return false;
     }

@@ -11,9 +11,8 @@ public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = CardArrangement.class)
-    @JoinColumn(name = "card_arrangement_id", referencedColumnName = "id", nullable = false/*, length = 25*/)
-    private CardArrangement cardArrangement;
+    @Column(name = "card_number")
+    private String cardNumber;
     @Column(name = "start_date", nullable = true)
     @Temporal(TemporalType.DATE)
     private Date startDate;
@@ -24,41 +23,6 @@ public class Card {
     @Column(name = "status", nullable = false)
     private Status status;
 
-    public Card(Status status) {
-        this.status = status;
-    }
-
-    public Card(CardArrangement cardArrangement, Status status) {
-        this.cardArrangement = cardArrangement;
-        this.status = status;
-    }
-
-        public Card(CardArrangement cardArrangement, Date startDate, Date endDate, Status status) {
-        this.cardArrangement = cardArrangement;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.status = status;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public CardArrangement getCardArrangement() {
-        return cardArrangement;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
+    public Card(){}
 
 }

@@ -1,22 +1,25 @@
 package com.sogyo.rvgelder.ipdebitcardreplacementflow.service;
 
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.AuthorizationLevel;
-import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.Card;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.CardArrangement;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.Customer;
 
-import java.util.List;
 
 public interface CustomerService {
 
-    void replaceCard(String customerNumber, String cardNumber);
+    void replaceCard(Customer customer, String cardNumber);
 
-    Customer createCustomer(String customerNumber, AuthorizationLevel authorizationLevel, List<CardArrangement> cardArrangements);
+//    Customer methods
 
-    Customer createCompleteCustomer(String customerNumber, AuthorizationLevel authorizationLevel, List<CardArrangement> cardArrangements);
+    AuthorizationLevel getAuthorizationLevel(Customer customer);
 
-//    CardArrangement createCardArrangement(String cardArrangementType, List<Card> cards);
+    //    CardArrangement methods
+    CardArrangement getCardArrangementById(Customer customer, Integer id);
 
-    Card createNewCard();
+    CardArrangement getCardArrangementByType(Customer customer, String cardArrangementType);
+
+    //    CardArrangement createCardArrangement(String cardArrangementType, List<Card> cards);
+
+//    Card methods
 
 }

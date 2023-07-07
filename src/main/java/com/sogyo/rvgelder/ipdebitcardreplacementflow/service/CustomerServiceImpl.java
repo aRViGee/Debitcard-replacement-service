@@ -2,19 +2,19 @@ package com.sogyo.rvgelder.ipdebitcardreplacementflow.service;
 
 
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.*;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-//    @Autowired
-//    private CustomerRepository customerRepository;
 
-    public void replaceCard(String customerNumber, String cardNumber) {
-        if (verifyCardReplacement(customerNumber,cardNumber)) {
+    public void replaceCard(Customer customer, String cardNumber) {
+        if (verifyCardReplacement(customer, cardNumber)) {
             if (true/*TODO - External authorization implementation*/) {
 //                TODO - Fulfillment:
 //                  TODO - Fulfillment - Create new card
@@ -24,40 +24,50 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
-    private boolean verifyCardReplacement(String customerNumber, String cardNumber) {
-        return (isOwnerOfCard(customerNumber,cardNumber)) && (isAllowedToReplace(customerNumber,cardNumber));
+    private boolean verifyCardReplacement(Customer customer, String cardNumber) {
+        return (isOwnerOfCard(customer, cardNumber)) && (isAllowedToReplace(customer, cardNumber));
     }
 
-    private boolean isAllowedToReplace(String customerNumber, String cardNumber) {
+    private boolean isOwnerOfCard(Customer customer, String cardNumber) {
+        for (int indexCardArrangements = 0; indexCardArrangements < customer.getCardArrangements().size(); indexCardArrangements++) {
+            for (int indexCards = 0; indexCards < customer.getCardArrangements().get(indexCardArrangements).getCards().size(); indexCards++) {
+                if(customer.getCardArrangements().get(indexCardArrangements).getCards().get(indexCards).getCardNumber().equals(cardNumber)) {
+                    return true;
+                }
+            }
+        } return false;
+    }
+
+    private boolean isAllowedToReplace(Customer customer, String cardNumber) {
+
         return false;
     }
 
-    private boolean isOwnerOfCard(String customerNumber, String cardNumber) {
+//    Customer method implementation
 
-        return false;
+    @Override
+    public AuthorizationLevel getAuthorizationLevel(Customer customer) {
+        return customer.getAuthorizationLevel();
     }
 
-    public Customer createCustomer(String customerNumber, AuthorizationLevel authorizationLevel, List<CardArrangement> cardArrangements) {
-        return new Customer(customerNumber, authorizationLevel, cardArrangements);
+
+//    CardArrangement method implementations
+    @Override
+    public CardArrangement getCardArrangementById(Customer customer, Integer id) {
+        return customer.getCardArrangements().get(id);
     }
 
     @Override
-    public Customer createCompleteCustomer(String customerNumber, AuthorizationLevel authorizationLevel, List<CardArrangement> cardArrangements) {
-        Customer customer = new Customer(customerNumber, authorizationLevel, null);
-        CardArrangement cardArrangement = new CardArrangement("DebitCardArrangement", null);
-        Card card = new Card("0A1B2C4D", Status.ACTIVE);
-        cardArrangement.getCards().add(card);
-        customer.getCardArrangements().add(cardArrangement);
-        return customer;
+    public CardArrangement getCardArrangementByType(Customer customer, String cardArrangementType) {
+//        TODO - Refactor with recursion
+        for (int index = 0; index < customer.getCardArrangements().size(); index++) {
+            if (customer.getCardArrangements().get(index).equals(cardArrangementType)) {
+                return customer.getCardArrangements().get(index);
+            }
+        }
+        return null;
     }
 
-
-//    public CardArrangement createCardArrangement(String cardArrangementType, List<Card> cards) {
-//        return new CardArrangement(cardArrangementType, cards);
-//    }
-    public Card createNewCard() {
-        return new Card();
-    }
 }
 
 

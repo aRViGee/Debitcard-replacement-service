@@ -14,10 +14,10 @@ public class CardArrangement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "cardArrangement_Type")
-    private String cardArrangementType;
+    private String cardArrangementType; //TODO - Make this of type Enum ('Debit_Card', 'Credit_Card')
     @OneToOne(/*mappedBy = "cardArrangement",*/ cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER, targetEntity = Card.class)
 //    @OneToMany(mappedBy = "cardArrangement", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER, targetEntity = Card.class)
-    private List<Card> cards = new ArrayList<>();
+    private List<Card> cards;
 
     public CardArrangement() { }
 
@@ -28,5 +28,9 @@ public class CardArrangement {
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    public String getCardArrangementType() {
+        return cardArrangementType;
     }
 }

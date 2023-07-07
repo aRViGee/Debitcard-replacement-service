@@ -19,9 +19,9 @@ public class Customer {
     @Column(name = "authorization_level", nullable = false, length = 1)
     private AuthorizationLevel authorizationLevel;
 //    @OneToOne/*(*//*mappedBy = "customer",*//* cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)*/
-    @OneToMany(/*mappedBy = "customer", */cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @Column(name = "cardArrangements")
-    private List<CardArrangement> cardArrangements = new ArrayList<>();
+    @OneToOne(/*mappedBy = "customer", */cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER, targetEntity = CardArrangement.class)
+//    @Column(name = "cardArrangements")
+    private List<CardArrangement> cardArrangements/* = new ArrayList<>()*/;
 
     public Customer() {}
 
@@ -33,5 +33,13 @@ public class Customer {
 
     public List<CardArrangement> getCardArrangements() {
         return cardArrangements;
+    }
+
+    public String getCustomerNumber() {
+        return customerNumber;
+    }
+
+    public AuthorizationLevel getAuthorizationLevel() {
+        return authorizationLevel;
     }
 }

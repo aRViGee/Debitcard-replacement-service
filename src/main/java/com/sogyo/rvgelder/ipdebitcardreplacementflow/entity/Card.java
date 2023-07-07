@@ -30,4 +30,12 @@ public class Card {
         this.cardNumber = cardNumber;
         this.status = status;
     }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public String getCardNumber() {
+        return cardNumber;
+    }
 }

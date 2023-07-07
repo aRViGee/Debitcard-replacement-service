@@ -1,9 +1,7 @@
 package com.sogyo.rvgelder.ipdebitcardreplacementflow.service;
 
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.Main;
-import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.AuthorizationLevel;
-import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.CardArrangement;
-import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.Customer;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.*;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.repository.CustomerRepository;
 import jakarta.annotation.Resource;
 import org.junit.Test;
@@ -14,6 +12,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
@@ -25,19 +24,74 @@ import static org.junit.Assert.*;
 @TestPropertySource(locations = "classpath:application-test.properties")
 public class CustomerServiceImplTest {
 
-//        @Autowired
-//        private CustomerService customerService;
-//
-//        @Autowired
-//        private CardArrangementService cardArrangementService;
-//
+    public static Customer createCompleteCustomer(
+            String customerNumber,
+            AuthorizationLevel authorizationLevel,
+            String cardArrangementType,
+            String cardNumber,
+            Status status) {
+        Customer customer = new Customer(customerNumber, authorizationLevel, new ArrayList<>());
+        CardArrangement cardArrangement = new CardArrangement(cardArrangementType, new ArrayList<>());
+        Card card = new Card(cardNumber, status);
+        cardArrangement.getCards().add(card);
+        customer.getCardArrangements().add(cardArrangement);
+        return customer;
+    }
+
+        @Autowired
+        private CustomerService customerService;
+
+        @Autowired
+        private CardArrangementService cardArrangementService;
+
+        @Autowired
+        private CardService cardService;
+
+
 //        @Resource
 //        private CustomerRepository customerRepository;
 
-        @Test
-        public void Test(){
-                assertTrue(true);
-        }
+
+    @Test
+    public void testCanFetchAttributesCustomer() {
+        Customer customer = createCompleteCustomer(
+                "12345678",
+                AuthorizationLevel.LEVEL_3,
+                "debitCardArrangement",
+                "0A1B2C3D",
+                Status.ACTIVE);
+
+        assertEquals("12345678",customer.getCustomerNumber());
+        assertEquals(AuthorizationLevel.LEVEL_3,customer.getAuthorizationLevel());
+    }
+
+    @Test
+    public void testCanFetchAttributesCardArrangement() {
+        Customer customer = createCompleteCustomer(
+                "12345678",
+                AuthorizationLevel.LEVEL_3,
+                "debitCardArrangement",
+                "0A1B2C3D",
+                Status.ACTIVE);
+
+        assertEquals("debitCardArrangement",customer.getCardArrangements().get(0).getCardArrangementType());
+    }
+
+    @Test
+    public void testCanFetchAttributesCard() {
+        Customer customer = createCompleteCustomer(
+                "12345678",
+                AuthorizationLevel.LEVEL_3,
+                "debitCardArrangement",
+                "0A1B2C3D",
+                Status.ACTIVE);
+
+        assertEquals("0A1B2C3D",customer.getCardArrangements().get(0).getCards().get(0).getCardNumber());
+        assertEquals(Status.ACTIVE,customer.getCardArrangements().get(0).getCards().get(0).getStatus());
+    }
+
+
+
 
 //        @Test
 //        public void testCanFindCustomerById() {

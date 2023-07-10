@@ -10,8 +10,8 @@ public class CustomerServiceImpl implements CustomerService, ExternalAuthorizati
 
 
     public void replaceCard(Customer customer, String cardNumber) {
-        if (CardReplacementIsValid(customer, cardNumber)) {
-            if (isAuthorized(customer,3)) {
+        if (cardReplacementIsValid(customer, cardNumber)) {
+            if (isAuthorized(customer,3)) { //TODO - External authorization implementation
 //                TODO - Fulfillment:
 //                  TODO - Fulfillment - Create new card
 //                      TODO - Fulfillment - if new card created: set end_date current card
@@ -22,18 +22,23 @@ public class CustomerServiceImpl implements CustomerService, ExternalAuthorizati
     }
 
     private void fulfillReplaceCard(Customer customer, String cardNumber) {
-//        createNewCard(customer);
+        createNewDebitCard(customer);
+    }
+
+    private boolean createNewDebitCard(Customer customer) {
+        CardServiceImpl.createNewDebitCard(customer);
+        return true;
     }
 
     public boolean isAuthorized(Customer customer, Integer processId) {
         return true;
     }
 
-    private boolean CardReplacementIsValid(Customer customer, String cardNumber) {
+    private boolean cardReplacementIsValid(Customer customer, String cardNumber) {
         return (isOwnerOfCard(customer, cardNumber)) && (isAllowedToReplace(customer));
     }
 
-    private boolean isOwnerOfCard(Customer customer, String cardNumber) {
+    private boolean isOwnerOfCard(Customer customer, String cardNumber) { //TODO - refactor using (flat)Map of forEach?
         for (int indexCardArrangements = 0; indexCardArrangements < customer.getCardArrangements().size(); indexCardArrangements++) {
             for (int indexCards = 0; indexCards < customer.getCardArrangements().get(indexCardArrangements).getCards().size(); indexCards++) {
                 if(customer.getCardArrangements().get(indexCardArrangements).getCards().get(indexCards).getCardNumber().equals(cardNumber)) {

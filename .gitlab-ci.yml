@@ -24,3 +24,4 @@ sast:
 include:
 - template: Security/SAST.gitlab-ci.yml
 
+#TODO - add test coverage

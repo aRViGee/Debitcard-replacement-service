@@ -31,6 +31,8 @@ public class Card {
         this.status = status;
     }
 
+    //TODO - add constructor with startDate and endDate
+
     public Status getStatus() {
         return status;
     }

@@ -2,20 +2,16 @@ package com.sogyo.rvgelder.ipdebitcardreplacementflow.service;
 
 
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.*;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Service
-public class CustomerServiceImpl implements CustomerService {
+public class CustomerServiceImpl implements CustomerService, ExternalAuthorization {
 
 
     public void replaceCard(Customer customer, String cardNumber) {
-        if (verifyCardReplacement(customer, cardNumber)) {
-            if (true/*TODO - External authorization implementation*/) {
+        if (CardReplacementIsValid(customer, cardNumber)) {
+            if (isAuthorized(3)/*TODO - External authorization implementation*/) {
 //                TODO - Fulfillment:
 //                  TODO - Fulfillment - Create new card
 //                      TODO - Fulfillment - if new card created: set end_date current card
@@ -24,7 +20,11 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
-    private boolean verifyCardReplacement(Customer customer, String cardNumber) {
+    public boolean isAuthorized(Integer processId) {
+        return true;
+    }
+
+    private boolean CardReplacementIsValid(Customer customer, String cardNumber) {
         return (isOwnerOfCard(customer, cardNumber)) && (isAllowedToReplace(customer));
     }
 

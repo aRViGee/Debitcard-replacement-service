@@ -11,16 +11,21 @@ public class CustomerServiceImpl implements CustomerService, ExternalAuthorizati
 
     public void replaceCard(Customer customer, String cardNumber) {
         if (CardReplacementIsValid(customer, cardNumber)) {
-            if (isAuthorized(3)/*TODO - External authorization implementation*/) {
+            if (isAuthorized(customer,3)) {
 //                TODO - Fulfillment:
 //                  TODO - Fulfillment - Create new card
 //                      TODO - Fulfillment - if new card created: set end_date current card
+                fulfillReplaceCard(customer, cardNumber);
             }
 //
         }
     }
 
-    public boolean isAuthorized(Integer processId) {
+    private void fulfillReplaceCard(Customer customer, String cardNumber) {
+//        createNewCard(customer);
+    }
+
+    public boolean isAuthorized(Customer customer, Integer processId) {
         return true;
     }
 

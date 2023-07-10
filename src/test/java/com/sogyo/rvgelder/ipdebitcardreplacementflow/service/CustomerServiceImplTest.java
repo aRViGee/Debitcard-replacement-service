@@ -93,6 +93,7 @@ public class CustomerServiceImplTest {
 
 
 
+
 //        @Test
 //        public void testCanFindCustomerById() {
 //                Customer customer1 = new Customer(AuthorizationLevel.LEVEL_3);

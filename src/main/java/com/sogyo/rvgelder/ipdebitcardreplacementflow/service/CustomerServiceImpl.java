@@ -25,7 +25,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     private boolean verifyCardReplacement(Customer customer, String cardNumber) {
-        return (isOwnerOfCard(customer, cardNumber)) && (isAllowedToReplace(customer, cardNumber));
+        return (isOwnerOfCard(customer, cardNumber)) && (isAllowedToReplace(customer));
     }
 
     private boolean isOwnerOfCard(Customer customer, String cardNumber) {
@@ -38,9 +38,8 @@ public class CustomerServiceImpl implements CustomerService {
         } return false;
     }
 
-    private boolean isAllowedToReplace(Customer customer, String cardNumber) {
-
-        return false;
+    private boolean isAllowedToReplace(Customer customer) {
+        return AuthorizationLevel.checkAllowedActions(customer.getAuthorizationLevel());
     }
 
 //    Customer method implementation

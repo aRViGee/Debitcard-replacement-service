@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface CardArrangementService {
 
-    CardArrangement findCardArrangement(Integer cardArrangementId);
-
-    //    Save operation
-    CardArrangement saveCardArrangement(CardArrangement cardArrangement);
-
-    //    Read operation
-    List<CardArrangement> fetchCardArrangementList();
+//    CardArrangement findCardArrangement(Integer cardArrangementId);
+//
+//    //    Save operation
+//    CardArrangement saveCardArrangement(CardArrangement cardArrangement);
+//
+//    //    Read operation
+//    List<CardArrangement> fetchCardArrangementList();
 
 //    List<Card> fetchCardList();
 

@@ -16,20 +16,20 @@ public class CardArrangementServiceImpl implements CardArrangementService {
     @Autowired
     private CardArrangementRepository cardArrangementRepository;
 
-    @Override
-    public CardArrangement findCardArrangement(Integer cardArrangementId) {
-        return cardArrangementRepository.findById(cardArrangementId).get();
-    }
-
-//    Save operation
-    @Override
-    public CardArrangement saveCardArrangement(CardArrangement cardArrangement) {return cardArrangementRepository.save(cardArrangement);}
-
-//    Read operation
-    @Override
-    public List<CardArrangement> fetchCardArrangementList() {
-        return cardArrangementRepository.findAll();
-    }
+//    @Override
+//    public CardArrangement findCardArrangement(Integer cardArrangementId) {
+//        return cardArrangementRepository.findById(cardArrangementId).get();
+//    }
+//
+////    Save operation
+//    @Override
+//    public CardArrangement saveCardArrangement(CardArrangement cardArrangement) {return cardArrangementRepository.save(cardArrangement);}
+//
+////    Read operation
+//    @Override
+//    public List<CardArrangement> fetchCardArrangementList() {
+//        return cardArrangementRepository.findAll();
+//    }
 
 //    @Override
 //    public List<Card> fetchCardList() {

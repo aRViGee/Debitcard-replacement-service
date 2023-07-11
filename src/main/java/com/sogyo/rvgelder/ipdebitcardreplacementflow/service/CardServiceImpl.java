@@ -16,9 +16,5 @@ public class CardServiceImpl implements CardService {
     private CardRepository cardRepository;
 
 //    Save operation
-    static boolean createNewDebitCard(Customer customer) {
-        Card card = new Card("5E6F7G8H", Status.INACTIVE);
-        return true;
-    }
 
 }

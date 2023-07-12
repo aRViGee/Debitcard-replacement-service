@@ -1,12 +1,12 @@
 package com.sogyo.rvgelder.ipdebitcardreplacementflow.entity;
 
 
-import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.CardServiceImpl;
-import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.CustomerService;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.CustomerServiceImpl;
 import jakarta.persistence.*;
+import org.apache.commons.lang3.RandomStringUtils;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
@@ -15,13 +15,14 @@ import java.util.List;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @SequenceGenerator(name = "Customer_id_gen")
     private Long id;
     @Column(name = "customer_number", unique = true, nullable = false)
     private String customerNumber;
     @Convert(converter = AuthorizationLevelConverter.class)
     @Column(name = "authorization_level", nullable = false, length = 1)
     private AuthorizationLevel authorizationLevel;
-    @OneToMany(cascade = CascadeType.ALL, /*orphanRemoval = true,*/ fetch = FetchType.LAZY/*, targetEntity = CardArrangement.class*/)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY/*, targetEntity = CardArrangement.class*/)
     @JoinColumn(name = "customer_id")
     private List<CardArrangement> cardArrangements/* = new ArrayList<>()*/;
 
@@ -46,30 +47,53 @@ public class Customer {
         return authorizationLevel;
     }
 
-    public void replaceCard(Card card) {
+
+    public Card replaceCard(Card card) {
         if (this.cardReplacementIsValid(card)) {
             if (CustomerServiceImpl.isAuthorized(this.getCustomerNumber(), 3)) { //TODO - External authorization implementation
 //                TODO - Fulfillment:
 //                  TODO - Fulfillment - Create new card
 //                      TODO - Fulfillment - if new card created: set end_date current card
-                this.fulfillReplaceCard(card);
+                Card newCard = this.fulfillReplaceCard(card);
+                return newCard;
             }
-
         }
+       return null;
     }
 
-    private void fulfillReplaceCard(Card card) {
-
-        this.createNewDebitCard();
-//        this.setNewEndDateOldCard(card);
+    private Card fulfillReplaceCard(Card card) {
+        Card newCard = this.createNewDebitCard();
+        this.setNewEndDateOldCard(card);
+        return newCard;
     }
 
-    private boolean createNewDebitCard() {
-        this.createNewDebitCard(this);
-        return true;
+    private void setNewEndDateOldCard(Card card) {
+        card.setEndDate(DateFormatter(14));
+    }
+
+    private String DateFormatter(Integer days) {
+        LocalDateTime myDateObj = LocalDateTime.now().plusDays(days);
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        return myDateObj.format(myFormatObj);
+    }
+
+    private Card createNewDebitCard() {
+        Card card = new Card(cardNumberGenerator(), DateFormatter(7), DateFormatter((365*5)), Status.INACTIVE);
+        this.getCardArrangements().get(0).getCards().add(card);
+        return card;
+    }
+
+    private String cardNumberGenerator() {
+        int length = 8;
+        boolean useLetters = true;
+        boolean useNumbers = true;
+
+        return RandomStringUtils.random(length, useLetters, useNumbers);
     }
 
     private boolean cardReplacementIsValid(Card card) {
+        System.out.println("Card replacement is valid");
         return (this.isOwnerOfCard(card)) && (this.isAllowedToReplace());
     }
 
@@ -77,6 +101,7 @@ public class Customer {
         for (int indexCardArrangements = 0; indexCardArrangements < this.getCardArrangements().size(); indexCardArrangements++) {
             for (int indexCards = 0; indexCards < this.getCardArrangements().get(indexCardArrangements).getCards().size(); indexCards++) {
                 if (this.getCardArrangements().get(indexCardArrangements).getCards().get(indexCards).equals(card)) {
+                    System.out.println("Customer is owner of card");
                     return true;
                 }
             }
@@ -85,12 +110,8 @@ public class Customer {
     }
 
     private boolean isAllowedToReplace() {
+        System.out.println("Customer is allowed to replace");
         return AuthorizationLevel.checkAllowedActions(this.getAuthorizationLevel());
     }
 
-    private boolean createNewDebitCard(Customer customer) {
-        Card card = new Card("5E6F7G8H", Status.INACTIVE);
-        customer.getCardArrangements().get(0).getCards().add(card);
-        return true;
-    }
 }

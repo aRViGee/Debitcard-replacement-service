@@ -1,5 +1,6 @@
 package com.sogyo.rvgelder.ipdebitcardreplacementflow.controller;
 
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.Card;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.Customer;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,11 @@ public class CustomerController {
     @GetMapping(path = "/CustomerByNumber")
     public Customer getCustomer(@RequestParam String customerNumber) {
         return customerService.getCustomerByCustomerNumber(customerNumber);
-//        return customerNumber;
     }
 
     @GetMapping(path = "/replaceDebitCard")
-    public void replaceDebitCard(@RequestParam String customerNumber, String cardNumber) {
-        customerService.replaceCard(customerNumber, cardNumber);
+    public String replaceDebitCard(@RequestParam String customerNumber, String cardNumber) {
+        Card newCard = customerService.replaceCard(customerNumber, cardNumber);
+        return "A new card has been added to your account, with card number: " + newCard.getCardNumber();
     }
 }

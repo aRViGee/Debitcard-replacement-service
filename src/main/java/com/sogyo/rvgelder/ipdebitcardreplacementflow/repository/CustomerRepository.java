@@ -9,6 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
-//    @Query("SELECT * FROM Customer WHERE customer_number = :number")
-    Customer findByCustomerNumber(/*@Param("number")*/ String customerNumber);
+    Customer findByCustomerNumber(String customerNumber);
 }

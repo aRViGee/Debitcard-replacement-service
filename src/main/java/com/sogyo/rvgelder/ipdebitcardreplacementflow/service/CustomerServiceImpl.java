@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 
 @Service
-public class CustomerServiceImpl implements CustomerService/*, ExternalAuthorization*/ {
+public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -19,45 +19,31 @@ public class CustomerServiceImpl implements CustomerService/*, ExternalAuthoriza
     @Autowired
     private CardRepository cardRepository;
 
+//    public void addNewCard(Long cardArrangementId, Card card) {
+//        cardRepository.save(card);
+//    }
 
-    public void replaceCard(String customerNumber, String cardNumber) {
+
+    public Card replaceCard(String customerNumber, String cardNumber) {
         Customer customer = getCustomerByCustomerNumber(customerNumber);
         Card card = getCardByCardNumber(cardNumber);
-        customer.replaceCard(card);
+        Card newCard = customer.replaceCard(card);
+        customerRepository.save(customer);
+        return newCard;
     }
 
 
 
     public static boolean isAuthorized(String customerNumber, Integer processId) {
 //        Logger logger = //TODO Make a logger for some visual feedback?
+        System.out.println("Card replacement is (externally) authorized");
         return true;
     }
 
 
-//    Customer method implementation
-
-//    @Override
-//    public AuthorizationLevel getAuthorizationLevel(Customer customer) {
-//        return customer.getAuthorizationLevel();
-//    }
 
 
-//    CardArrangement method implementations
-//    @Override
-//    public CardArrangement getCardArrangementById(Customer customer, Integer id) {
-//        return customer.getCardArrangements().get(id);
-//    }
 
-//    @Override
-//    public CardArrangement getCardArrangementByType(Customer customer, String cardArrangementType) {
-////        TODO - Refactor with recursion
-//        for (int index = 0; index < customer.getCardArrangements().size(); index++) {
-//            if (customer.getCardArrangements().get(index).getCardArrangementType().equals(cardArrangementType)) {
-//                return customer.getCardArrangements().get(index);
-//            }
-//        }
-//        return null;
-//    }
 
     @Override
     public Card getCardByCardNumber(String cardNumber) {

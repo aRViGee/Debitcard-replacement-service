@@ -1,4 +1,4 @@
-package com.sogyo.rvgelder.ipdebitcardreplacementflow.entity;
+package com.sogyo.rvgelder.ipdebitcardreplacementflow;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

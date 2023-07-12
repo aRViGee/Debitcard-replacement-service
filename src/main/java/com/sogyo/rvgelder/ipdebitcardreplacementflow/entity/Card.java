@@ -14,12 +14,12 @@ public class Card {
     private Long id;
     @Column(name = "card_number", unique = true, nullable = false)
     private String cardNumber;
-    @Column(name = "start_date", nullable = true)
-    @Temporal(TemporalType.DATE)
-    private Date startDate;
-    @Column(name = "end_date", nullable = true)
-    @Temporal(TemporalType.DATE)
-    private Date endDate;
+    @Column(name = "start_date", nullable = false)
+//    @Temporal(TemporalType.DATE)
+    private String startDate;
+    @Column(name = "end_date", nullable = false)
+//    @Temporal(TemporalType.DATE)
+    private String endDate;
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private Status status;
@@ -31,13 +31,33 @@ public class Card {
         this.status = status;
     }
 
+
+    public Card(String cardNumber, String startDate, String endDate, Status status) {
+        this.cardNumber = cardNumber;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = status;
+    }
+
     //TODO - add constructor with startDate and endDate
 
     public Status getStatus() {
         return status;
     }
 
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
     public String getCardNumber() {
         return cardNumber;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 }

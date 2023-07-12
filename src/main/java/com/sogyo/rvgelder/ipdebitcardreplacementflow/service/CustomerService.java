@@ -9,20 +9,7 @@ import com.sogyo.rvgelder.ipdebitcardreplacementflow.repository.CustomerReposito
 
 public interface CustomerService {
 
-    void replaceCard(String customerNumber, String cardNumber);
-
-//    Customer methods
-
-//    AuthorizationLevel getAuthorizationLevel(Customer customer);
-
-    //    CardArrangement methods
-//    CardArrangement getCardArrangementById(Customer customer, Integer id);
-
-//    CardArrangement getCardArrangementByType(Customer customer, String cardArrangementType);
-
-    //    CardArrangement createCardArrangement(String cardArrangementType, List<Card> cards);
-
-//    Card methods
+    Card replaceCard(String customerNumber, String cardNumber);
 
     Card getCardByCardNumber(String cardNumber);
 

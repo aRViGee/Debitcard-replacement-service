@@ -13,10 +13,14 @@ public class CardArrangement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
     @Column(name = "cardArrangement_Type", nullable = false)
     private String cardArrangementType; //TODO - Make this of type Enum ('Debit_Card', 'Credit_Card')
-//    @OneToOne(/*mappedBy = "cardArrangement",*/ cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER, targetEntity = Card.class)
-    @OneToMany(/*, cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER, targetEntity = Card.class*/)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY/*, targetEntity = Card.class*/)
     @JoinColumn(name = "card_arrangement_id")
     private List<Card> cards;
 

@@ -17,9 +17,6 @@ test-job:
   stage: compile
   script:
     - mvn clean test
-    - mvn jacocoTestReport
-  coverage: /Total.*?([0-9]{1,3})%/
-
 
 sast:
   stage: test

@@ -1,6 +1,5 @@
 package com.sogyo.rvgelder.ipdebitcardreplacementflow.entity;
 
-
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.CustomerServiceImpl;
 import jakarta.persistence.*;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -15,16 +14,15 @@ import java.util.List;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @SequenceGenerator(name = "Customer_id_gen")
     private Long id;
     @Column(name = "customer_number", unique = true, nullable = false)
     private String customerNumber;
     @Convert(converter = AuthorizationLevelConverter.class)
     @Column(name = "authorization_level", nullable = false, length = 1)
     private AuthorizationLevel authorizationLevel;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY/*, targetEntity = CardArrangement.class*/)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
-    private List<CardArrangement> cardArrangements/* = new ArrayList<>()*/;
+    private List<CardArrangement> cardArrangements;
 
     public Customer() {
     }
@@ -49,14 +47,8 @@ public class Customer {
 
 
     public Card replaceCard(Card card) {
-        if (this.cardReplacementIsValid(card)) {
-            if (CustomerServiceImpl.isAuthorized(this.getCustomerNumber(), 3)) { //TODO - External authorization implementation
-//                TODO - Fulfillment:
-//                  TODO - Fulfillment - Create new card
-//                      TODO - Fulfillment - if new card created: set end_date current card
-                Card newCard = this.fulfillReplaceCard(card);
-                return newCard;
-            }
+        if (this.cardReplacementIsValid(card) && (CustomerServiceImpl.isAuthorized(this.getCustomerNumber(), 3))) {
+                return this.fulfillReplaceCard(card);
         }
        return null;
     }

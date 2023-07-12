@@ -25,19 +25,3 @@ VALUES(2,'4E5F6G7H', '2023-05-01', '2028-05-01', 'ACTIVE');
 INSERT INTO Card(card_arrangement_id, card_number, start_date, end_date, status)
 VALUES( 2,'8I9J0K1L', '2023-08-01', '2028-08-01', 'INACTIVE');
 
-
-----Customer #3, with 1 Card and 1 CardArrangement
---INSERT INTO Customer(authorization_level)
---VALUES(2);
---
---INSERT INTO Card_Arrangement(customer_id)
---VALUES(3);
---
---INSERT INTO Card(card_arrangement_id, start_date, end_date, status)
---VALUES(3, '2023-07-01', '2028-07-01', 'INACTIVE');
---
---INSERT INTO Customer_Card_ArrangementS(customer_id, Card_ArrangementS_Id)
---VALUES(3,3);
---
---INSERT INTO CARD_ARRANGEMENT_CARDS(card_arrangement_id, cards_id)
---VALUES(3,3);

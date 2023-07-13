@@ -24,11 +24,6 @@ public class Card {
 
     public Card(){}
 
-//    public Card(String cardNumber, Status status) {
-//        this.cardNumber = cardNumber;
-//        this.status = status;
-//    }
-
 
     public Card(String cardNumber, String startDate, String endDate, Status status) {
         this.cardNumber = cardNumber;
@@ -38,13 +33,14 @@ public class Card {
     }
 
 
-//    public Status getStatus() {
-//        return status;
-//    }
-//
-//    public String getStartDate() {
-//        return startDate;
-//    }
+    public Status getStatus() {
+        return status;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
 
     public String getEndDate() {
         return endDate;

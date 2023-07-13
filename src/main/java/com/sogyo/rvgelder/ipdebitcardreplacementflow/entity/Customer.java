@@ -7,6 +7,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 
 
 @Entity
@@ -20,7 +21,7 @@ public class Customer {
     @Convert(converter = AuthorizationLevelConverter.class)
     @Column(name = "authorization_level", nullable = false, length = 1)
     private AuthorizationLevel authorizationLevel;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private List<CardArrangement> cardArrangements;
 
@@ -48,44 +49,15 @@ public class Customer {
 
     public Card replaceCard(Card card) {
         if (this.cardReplacementIsValid(card) && (CustomerServiceImpl.isAuthorized(this.getCustomerNumber(), 3))) {
+            System.out.println("Card replacement is valid");
+            System.out.println("Customer is allowed to replace");
                 return this.fulfillReplaceCard(card);
         }
        return null;
     }
 
-    private Card fulfillReplaceCard(Card card) {
-        Card newCard = this.createNewDebitCard();
-        this.setNewEndDateOldCard(card);
-        return newCard;
-    }
-
-    private void setNewEndDateOldCard(Card card) {
-        card.setEndDate(DateFormatter(14));
-    }
-
-    private String DateFormatter(Integer days) {
-        LocalDateTime myDateObj = LocalDateTime.now().plusDays(days);
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-        return myDateObj.format(myFormatObj);
-    }
-
-    private Card createNewDebitCard() {
-        Card card = new Card(cardNumberGenerator(), DateFormatter(7), DateFormatter((365*5)), Status.INACTIVE);
-        this.getCardArrangements().get(0).getCards().add(card);
-        return card;
-    }
-
-    private String cardNumberGenerator() {
-        int length = 8;
-        boolean useLetters = true;
-        boolean useNumbers = true;
-
-        return RandomStringUtils.random(length, useLetters, useNumbers);
-    }
-
     private boolean cardReplacementIsValid(Card card) {
-        System.out.println("Card replacement is valid");
+        //TODO - Try...catch if the customer isnt owner of card or not allowed to replace?
         return (this.isOwnerOfCard(card)) && (this.isAllowedToReplace());
     }
 
@@ -102,8 +74,41 @@ public class Customer {
     }
 
     private boolean isAllowedToReplace() {
-        System.out.println("Customer is allowed to replace");
         return AuthorizationLevel.checkAllowedActions(this.getAuthorizationLevel());
+    }
+
+    private Card fulfillReplaceCard(Card card) {
+        //TODO - Try...catch if the new card can't be created or added, or the new end date can't be set?
+        Card newCard = this.createNewDebitCard();
+        this.setNewEndDateOldCard(card);
+        return newCard;
+    }
+
+    private void setNewEndDateOldCard(Card card) {
+        card.setEndDate(dateGenerator(14));
+        System.out.println("New end date has been set for current card: " + card.getEndDate());
+    }
+
+    private Card createNewDebitCard() {
+        Card card = new Card(cardNumberGenerator(), dateGenerator(7), dateGenerator((365*5)), Status.INACTIVE);
+        this.getCardArrangements().get(0).getCards().add(card);
+        System.out.println("New card has been created with card number: " + card.getCardNumber());
+        return card;
+    }
+
+    private String dateGenerator(Integer days) {
+        LocalDateTime myDateObj = LocalDateTime.now().plusDays(days);
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        return myDateObj.format(myFormatObj);
+    }
+
+    private String cardNumberGenerator() {
+        int length = 8;
+        boolean useLetters = true;
+        boolean useNumbers = true;
+
+        return RandomStringUtils.random(length, useLetters, useNumbers);
     }
 
 }

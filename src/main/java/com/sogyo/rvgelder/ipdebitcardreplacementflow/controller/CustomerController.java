@@ -24,7 +24,12 @@ public class CustomerController {
 
     @GetMapping(path = "/replaceDebitCard")
     public String replaceDebitCard(@RequestParam String customerNumber, String cardNumber) {
-        Card newCard = customerService.replaceCard(customerNumber, cardNumber);
-        return "A new card has been added to your account, with card number: " + newCard.getCardNumber();
+        try {
+            Card newCard = customerService.replaceCard(customerNumber, cardNumber);
+            return "A new card has been added to your account, with card number: " + newCard.getCardNumber();
+
+        } catch (Exception e) {
+            return "Card replacement failed for card with card number " + cardNumber + " and could not be replaced. Try again or contact customer service.";
+        }
     }
 }

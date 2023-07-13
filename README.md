@@ -6,12 +6,13 @@ MoSCoW:
 - Must: 
   - User gets verified before being able to request a new card.
   - The application waits for external authorisation.
-  - If the user is eligible, the replacement request gets fulfilled by issuing a new debit card.
+  - If the user is eligible, the replacement request gets fulfilled by issuing a new debit card and setting a new end date for the current debit card.
   - Endpoints in place for the replacement flow.
   - Interaction possible with a database for data ‘persistence’.
 
 - Should:
   - AllowedActions is determined by the AuthorizationLevel.
+  - Error handling and server response code is based on where the process fails.
 
 
 Software stack:
@@ -19,6 +20,7 @@ Software stack:
 - Spring Boot
 - Hibernate
 - JPA
+- Swagger
 - H2
 - Maven
 - JUnit

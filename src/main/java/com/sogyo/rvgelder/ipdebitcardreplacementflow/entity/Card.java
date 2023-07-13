@@ -1,10 +1,8 @@
 package com.sogyo.rvgelder.ipdebitcardreplacementflow.entity;
 
-
 import jakarta.persistence.*;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name="Card")
@@ -26,10 +24,10 @@ public class Card {
 
     public Card(){}
 
-    public Card(String cardNumber, Status status) {
-        this.cardNumber = cardNumber;
-        this.status = status;
-    }
+//    public Card(String cardNumber, Status status) {
+//        this.cardNumber = cardNumber;
+//        this.status = status;
+//    }
 
 
     public Card(String cardNumber, String startDate, String endDate, Status status) {
@@ -39,15 +37,14 @@ public class Card {
         this.status = status;
     }
 
-    //TODO - add constructor with startDate and endDate
 
-    public Status getStatus() {
-        return status;
-    }
-
-    public String getStartDate() {
-        return startDate;
-    }
+//    public Status getStatus() {
+//        return status;
+//    }
+//
+//    public String getStartDate() {
+//        return startDate;
+//    }
 
     public String getEndDate() {
         return endDate;
@@ -59,5 +56,18 @@ public class Card {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Card card = (Card) o;
+        return Objects.equals(id, card.id) && Objects.equals(cardNumber, card.cardNumber) && Objects.equals(startDate, card.startDate) && Objects.equals(endDate, card.endDate) && status == card.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, cardNumber, startDate, endDate, status);
     }
 }

@@ -35,7 +35,7 @@ public class CustomerTests {
         assertNotNull(newCard);
     }
 
-//    @Test
+//    @Test(expected = NoSuchElementException.class)
 //    void testCantReplaceWhenCardDoesntExist() {
 //        fail();
 //

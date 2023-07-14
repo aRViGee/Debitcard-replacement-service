@@ -4,6 +4,7 @@ import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.CustomerServiceImpl
 import jakarta.persistence.*;
 import org.apache.commons.lang3.RandomStringUtils;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -48,6 +49,7 @@ public class Customer {
 
 
     public Card replaceCard(Card card) {
+        //TODO - Check if card's startDate isn't higher than current date
         if (this.cardReplacementIsValid(card) && (CustomerServiceImpl.isAuthorized(this.getCustomerNumber(), 3))) {
             System.out.println("Card replacement is valid");
             System.out.println("Customer is allowed to replace");
@@ -57,15 +59,14 @@ public class Customer {
     }
 
     private boolean cardReplacementIsValid(Card card) {
-        //TODO - Try...catch if the customer isnt owner of card or not allowed to replace?
+        //TODO - Try...catch if the customer isn't owner of card or not allowed to replace?
         return (this.isOwnerOfCard(card)) && (this.isAllowedToReplace());
     }
 
-    private boolean isOwnerOfCard(Card card) { //TODO - refactor using (flat)Map of forEach?
-        for (int indexCardArrangements = 0; indexCardArrangements < this.getCardArrangements().size(); indexCardArrangements++) {
-            for (int indexCards = 0; indexCards < this.getCardArrangements().get(indexCardArrangements).getCards().size(); indexCards++) {
-                if (this.getCardArrangements().get(indexCardArrangements).getCards().get(indexCards).equals(card)) {
-                    System.out.println("Customer is owner of card");
+    private boolean isOwnerOfCard(Card card) {
+        for (CardArrangement cardArrangementResult: this.getCardArrangements()) {
+            for (Card cardResult: cardArrangementResult.getCards()) {
+                if (cardResult.equals(card)){
                     return true;
                 }
             }
@@ -84,11 +85,6 @@ public class Customer {
         return newCard;
     }
 
-    private void setNewEndDateOldCard(Card card) {
-        card.setEndDate(dateGenerator(14));
-        System.out.println("New end date has been set for current card: " + card.getEndDate());
-    }
-
     private Card createNewDebitCard() {
         Card card = new Card(cardNumberGenerator(), dateGenerator(7), dateGenerator((365*5)), Status.INACTIVE);
         this.getCardArrangements().get(0).getCards().add(card);
@@ -96,8 +92,13 @@ public class Customer {
         return card;
     }
 
+    private void setNewEndDateOldCard(Card card) {
+        card.setEndDate(dateGenerator(14));
+        System.out.println("New end date has been set for current card: " + card.getEndDate());
+    }
+
     private String dateGenerator(Integer days) {
-        LocalDateTime myDateObj = LocalDateTime.now().plusDays(days);
+        LocalDate myDateObj = LocalDate.now().plusDays(days);
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         return myDateObj.format(myFormatObj);

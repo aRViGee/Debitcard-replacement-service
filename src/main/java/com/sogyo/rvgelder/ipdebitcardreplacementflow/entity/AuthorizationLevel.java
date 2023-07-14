@@ -15,9 +15,8 @@ public enum AuthorizationLevel {
     }
 
     public static boolean checkAllowedActions(AuthorizationLevel authorizationLevel) {
-        //TODO refactor with forEach?
-        for (int indexAllowedAction = 0; indexAllowedAction < AllowedActions.createAllowedActionsList(authorizationLevel).size(); indexAllowedAction++) {
-            if (AllowedActions.createAllowedActionsList(authorizationLevel).get(indexAllowedAction).equals(AllowedActions.REPLACE)) {
+        for (AllowedActions allowedAction: AllowedActions.createAllowedActionsList(authorizationLevel)) {
+            if (allowedAction.equals(AllowedActions.REPLACE)) {
                 return true;
             }
         }

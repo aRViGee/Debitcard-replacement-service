@@ -16,13 +16,13 @@ stages:
 test-job:
   stage: compile
   script:
-    - echo "testing phase
+    - echo "testing phase"
     - mvn clean test
-#    - cat target/reports/jacoco/test/html/index.html | grep -o '<tfoot>.*</tfoot>'
-#  coverage: /Total.*?([0-9]{1,3})%/
-#  artifacts:
-#    paths:
-#      - target/reports/jacoco/test/html/index.html
+    - cat target/reports/jacoco/test/html/index.html | grep -o '<tfoot>.*</tfoot>'
+  coverage: /Total.*?([0-9]{1,3})%/
+  artifacts:
+    paths:
+      - target/reports/jacoco/test/html/index.html
 
 
 sast:

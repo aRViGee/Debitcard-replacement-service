@@ -14,9 +14,16 @@ stages:
   - deploy
 
 test-job:
-  stage: compile
+  stage: test
   script:
+    - echo "testing phase
     - mvn clean test
+    - cat target/reports/jacoco/test/html/index.html | grep -o '<tfoot>.*</tfoot>'
+  coverage: /Total.*?([0-9]{1,3})%/
+  artifacts:
+    paths:
+      - target/reports/jacoco/test/html/index.html
+
 
 sast:
   stage: test

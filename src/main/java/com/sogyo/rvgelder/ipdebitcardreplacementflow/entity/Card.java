@@ -2,6 +2,8 @@ package com.sogyo.rvgelder.ipdebitcardreplacementflow.entity;
 
 import jakarta.persistence.*;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -14,43 +16,40 @@ public class Card {
     private String cardNumber;
     @Column(name = "start_date", nullable = false)
 //    @Temporal(TemporalType.DATE)
-    private String startDate;
+    private LocalDate startDate;
     @Column(name = "end_date", nullable = false)
 //    @Temporal(TemporalType.DATE)
-    private String endDate;
+    private LocalDate endDate;
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private Status status;
 
     public Card(){}
 
-
-    public Card(String cardNumber, String startDate, String endDate, Status status) {
+    public Card(String cardNumber, LocalDate startDate, LocalDate endDate, Status status) {
         this.cardNumber = cardNumber;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
     }
 
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
 
     public Status getStatus() {
         return status;
     }
 
-    public String getStartDate() {
-        return startDate;
-    }
-
-
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public String getCardNumber() {
-        return cardNumber;
-    }
-
-    public void setEndDate(String endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

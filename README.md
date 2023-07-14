@@ -14,6 +14,8 @@ MoSCoW:
   - AllowedActions is determined by the AuthorizationLevel.
   - Error handling and server response code is based on where the process fails.
 
+- Won't:
+  - Adjust for leap years when setting an end date for a new card, using start date + 5 years.
 
 Software stack:
 - Java

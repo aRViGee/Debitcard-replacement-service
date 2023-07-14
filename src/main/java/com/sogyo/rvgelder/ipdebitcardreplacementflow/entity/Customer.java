@@ -5,10 +5,7 @@ import jakarta.persistence.*;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Objects;
 
 
 @Entity
@@ -49,11 +46,12 @@ public class Customer {
 
 
     public Card replaceCard(Card card) {
-        //TODO - Check if card's startDate isn't higher than current date
-        if (this.cardReplacementIsValid(card) && (CustomerServiceImpl.isAuthorized(this.getCustomerNumber(), 3))) {
-            System.out.println("Card replacement is valid");
-            System.out.println("Customer is allowed to replace");
+        if (card.getStartDate().isBefore(LocalDate.now()) && card.getStatus().equals(Status.ACTIVE)) {
+            if (this.cardReplacementIsValid(card) && (CustomerServiceImpl.isAuthorized(this.getCustomerNumber(), 3))) {
+                System.out.println("Card replacement is valid");
+                System.out.println("Customer is allowed to replace");
                 return this.fulfillReplaceCard(card);
+            }
         }
        return null;
     }
@@ -97,11 +95,8 @@ public class Customer {
         System.out.println("New end date has been set for current card: " + card.getEndDate());
     }
 
-    private String dateGenerator(Integer days) {
-        LocalDate myDateObj = LocalDate.now().plusDays(days);
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-        return myDateObj.format(myFormatObj);
+    private LocalDate dateGenerator(Integer days) {
+        return LocalDate.now().plusDays(days);
     }
 
     private String cardNumberGenerator() {

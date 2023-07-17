@@ -54,7 +54,6 @@ public class Customer {
     }
 
     private boolean cardReplacementIsValid(Card card) {
-        //TODO - Try...catch if the customer isn't owner of card or not allowed to replace?
         return (this.isOwnerOfCard(card)) && (this.isAllowedToReplace());
     }
 
@@ -74,7 +73,6 @@ public class Customer {
     }
 
     private Card fulfillReplaceCard(Card card) {
-        //TODO - Try...catch if the new card can't be created or added, or the new end date can't be set?
         Card newCard = this.createNewDebitCard();
         this.setNewEndDateOldCard(card);
         return newCard;

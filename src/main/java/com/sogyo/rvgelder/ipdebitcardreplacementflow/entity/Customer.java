@@ -46,7 +46,7 @@ public class Customer {
 
 
     public Card replaceCard(Card card) {
-        if (card.getStartDate().isBefore(LocalDate.now()) && card.getStatus().equals(Status.ACTIVE) && (this.cardReplacementIsValid(card) && (CustomerServiceImpl.isAuthorized(this.getCustomerNumber(), 3)))) {
+        if (card.getStartDate().isBefore(LocalDate.now()) && !(card.getStatus().equals(Status.INACTIVE)) && (this.cardReplacementIsValid(card) && (CustomerServiceImpl.isAuthorized(this.getCustomerNumber(), 3)))) {
                 return this.fulfillReplaceCard(card);
 
         }

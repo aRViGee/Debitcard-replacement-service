@@ -1,6 +1,6 @@
 --Populate the database
 
---Customer #1, with 2 CardArrangements and 1 Card
+--Customer #1, with 2 CardArrangements and 2 Cards
 
 INSERT INTO Customer(customer_number, authorization_level)
 VALUES ('12345678', 3);
@@ -13,6 +13,9 @@ VALUES(1, 'Credit cards');
 
 INSERT INTO Card( card_arrangement_id, card_number, start_date, end_date, status)
 VALUES(1,'0A1B2C3D', '2023-04-01', '2028-04-01', 'ACTIVE');
+
+INSERT INTO Card( card_arrangement_id, card_number, start_date, end_date, status)
+VALUES(1,'0U1V2W3X', '2023-04-01', '2028-04-01', 'BLOCKED');
 
 --Customer #2, with 2 CardArrangements and 2 Cards
 

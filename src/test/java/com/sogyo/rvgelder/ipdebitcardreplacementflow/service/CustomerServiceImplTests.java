@@ -4,6 +4,7 @@ import com.sogyo.rvgelder.ipdebitcardreplacementflow.controller.CustomerControll
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.*;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.repository.CustomerRepository;
 import org.junit.jupiter.api.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
@@ -28,23 +29,85 @@ public class CustomerServiceImplTests {
     @Autowired
     private CustomerServiceImpl customerService;
 
+//    @Test
+//    void testCanReplaceCard() {
+//        Customer customer1 = new Customer("testCustomer1", AuthorizationLevel.LEVEL_3, new ArrayList<>());
+//        CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards",new ArrayList<>());
+//        Card card1 = new Card("testCard1", LocalDate.of(2023,06,28), LocalDate.of(2028,06,28), Status.ACTIVE);
+//        debitCardArrangement1.getCards().add(card1);
+//        customer1.getCardArrangements().add(debitCardArrangement1);
+//        customerRepository.save(customer1);
+//
+//        var newCard = customerService.replaceCard("testCustomer1","testCard1");
+//        customerRepository.save(customer1);
+//
+//        var result = customer1.getCardArrangements().get(0).getCards().size();
+////        var result = customerRepository.findByCustomerNumber("testCustomer1").getCardArrangements().get(0).getCards().size();
+//
+//
+//        assertNotNull(newCard);
+////        assertEquals(2, result);
+//    }
+
     @Test
     void testCanReplaceCard() {
-        Customer customer1 = new Customer("testCustomer1", AuthorizationLevel.LEVEL_3, new ArrayList<>());
+        Customer customer1 = new Customer("testCustomer1",AuthorizationLevel.LEVEL_3, new ArrayList<>());
         CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards",new ArrayList<>());
-        Card card1 = new Card("testCard1", LocalDate.of(2023,06,28), LocalDate.of(2028,06,28), Status.ACTIVE);
+        Card card1 = new Card("testCard1", LocalDate.of(2023, 6,28), LocalDate.of(2028, 6,28),Status.ACTIVE);
         debitCardArrangement1.getCards().add(card1);
         customer1.getCardArrangements().add(debitCardArrangement1);
         customerRepository.save(customer1);
 
-        var newCard = customerService.replaceCard("testCustomer1","testCard1");
-        customerRepository.save(customer1);
-
-        var result = customer1.getCardArrangements().get(0).getCards().size();
-//        var result = customerRepository.findByCustomerNumber("testCustomer1").getCardArrangements().get(0).getCards().size();
-
+        Card newCard = customerService.replaceCard(customer1.getCustomerNumber(), card1.getCardNumber());
 
         assertNotNull(newCard);
-//        assertEquals(2, result);
+    }
+
+    @org.junit.Test(expected = NullPointerException.class)
+    public void testCannotReplaceWhenCustomerNumberIsIncorrect() {
+        Customer customer1 = new Customer("testCustomer1",AuthorizationLevel.LEVEL_3, new ArrayList<>());
+        CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards",new ArrayList<>());
+        Card card1 = new Card("testCard1", LocalDate.of(2023, 6,28), LocalDate.of(2028, 6,28),Status.ACTIVE);
+        debitCardArrangement1.getCards().add(card1);
+        customer1.getCardArrangements().add(debitCardArrangement1);
+        customerRepository.save(customer1);
+
+        Card newCard = customerService.replaceCard("wrongCustomerNumber", "testCard1");
+
+        assertNull(newCard);
+    }
+
+    @org.junit.Test(expected = NullPointerException.class)
+    public void testCannotReplaceWhenCardNumberIsIncorrect() {
+        Customer customer1 = new Customer("testCustomer1",AuthorizationLevel.LEVEL_3, new ArrayList<>());
+        CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards",new ArrayList<>());
+        Card card1 = new Card("testCard1", LocalDate.of(2023, 6,28), LocalDate.of(2028, 6,28),Status.ACTIVE);
+        debitCardArrangement1.getCards().add(card1);
+        customer1.getCardArrangements().add(debitCardArrangement1);
+        customerRepository.save(customer1);
+
+        Card newCard = customerService.replaceCard("testCustomer1", "wrongCardNumber");
+
+        assertNull(newCard);
+    }
+
+    @org.junit.Test(expected = NullPointerException.class)
+    public void testCannotReplaceWhenCustomerNotOwnerOfCard() {
+        Customer customer1 = new Customer("testCustomer1",AuthorizationLevel.LEVEL_3, new ArrayList<>());
+        CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards",new ArrayList<>());
+        Card card1 = new Card("testCard1", LocalDate.of(2023, 6,28), LocalDate.of(2028, 6,28),Status.ACTIVE);
+        debitCardArrangement1.getCards().add(card1);
+        customer1.getCardArrangements().add(debitCardArrangement1);
+        customerRepository.save(customer1);
+        Customer customer2 = new Customer("testCustomer2",AuthorizationLevel.LEVEL_3, new ArrayList<>());
+        CardArrangement debitCardArrangement2 = new CardArrangement("Debit cards",new ArrayList<>());
+        Card card2 = new Card("testCard2", LocalDate.of(2023, 6,28), LocalDate.of(2028, 6,28),Status.ACTIVE);
+        debitCardArrangement2.getCards().add(card2);
+        customer2.getCardArrangements().add(debitCardArrangement2);
+        customerRepository.save(customer2);
+
+        Card newCard = customerService.replaceCard("testCustomer1", "testCard2");
+
+        assertNull(newCard);
     }
 }

@@ -58,11 +58,11 @@ public class Card {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
-        return Objects.equals(id, card.id) && Objects.equals(cardNumber, card.cardNumber) && Objects.equals(startDate, card.startDate) && Objects.equals(endDate, card.endDate) && status == card.status;
+        return Objects.equals(cardNumber, card.cardNumber) && Objects.equals(startDate, card.startDate) && Objects.equals(endDate, card.endDate) && status == card.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, cardNumber, startDate, endDate, status);
+        return Objects.hash(cardNumber, startDate, endDate, status);
     }
 }

@@ -21,12 +21,11 @@ public class CustomerTests {
     private CustomerRepository customerRepository;
 
 
-
     @Test
     void testCanReplaceCard() {
         Customer customer1 = new Customer("testCustomer1",AuthorizationLevel.LEVEL_3, new ArrayList<>());
         CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards",new ArrayList<>());
-        Card card1 = new Card("testCard1", LocalDate.of(2023,06,28), LocalDate.of(2028,06,28),Status.ACTIVE);
+        Card card1 = new Card("testCard1", LocalDate.of(2023, 6,28), LocalDate.of(2028, 6,28),Status.ACTIVE);
         debitCardArrangement1.getCards().add(card1);
         customer1.getCardArrangements().add(debitCardArrangement1);
         customerRepository.save(customer1);
@@ -36,10 +35,20 @@ public class CustomerTests {
         assertNotNull(newCard);
     }
 
-//    @Test(expected = NoSuchElementException.class)
-//    void testCantReplaceWhenCardDoesntExist() {
-//        fail();
-//
-//    }
+    @Test
+    void testCannotReplaceWhenCustomerDoesNotHaveReplaceRight() {
+        Customer customer1 = new Customer("testCustomer1",AuthorizationLevel.LEVEL_1, new ArrayList<>());
+        CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards",new ArrayList<>());
+        Card card1 = new Card("testCard1", LocalDate.of(2023, 6,28), LocalDate.of(2028, 6,28),Status.ACTIVE);
+        debitCardArrangement1.getCards().add(card1);
+        customer1.getCardArrangements().add(debitCardArrangement1);
+        customerRepository.save(customer1);
+
+        Card newCard = customer1.replaceCard(card1);
+
+        assertNull(newCard);
+    }
+
+
 
 }

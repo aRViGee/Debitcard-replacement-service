@@ -48,8 +48,8 @@ public class Customer {
     public Card replaceCard(Card card) {
         if (card.getStartDate().isBefore(LocalDate.now()) && card.getStatus().equals(Status.ACTIVE)) {
             if (this.cardReplacementIsValid(card) && (CustomerServiceImpl.isAuthorized(this.getCustomerNumber(), 3))) {
-                System.out.println("Card replacement is valid");
-                System.out.println("Customer is allowed to replace");
+                System.out.println("Card replacement is owner and allowed to replace");
+                System.out.println("Customer is authorized to replace");
                 return this.fulfillReplaceCard(card);
             }
         }

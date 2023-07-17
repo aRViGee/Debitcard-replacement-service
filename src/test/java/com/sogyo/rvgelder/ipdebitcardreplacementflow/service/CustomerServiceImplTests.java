@@ -29,25 +29,6 @@ public class CustomerServiceImplTests {
     @Autowired
     private CustomerServiceImpl customerService;
 
-//    @Test
-//    void testCanReplaceCard() {
-//        Customer customer1 = new Customer("testCustomer1", AuthorizationLevel.LEVEL_3, new ArrayList<>());
-//        CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards",new ArrayList<>());
-//        Card card1 = new Card("testCard1", LocalDate.of(2023,06,28), LocalDate.of(2028,06,28), Status.ACTIVE);
-//        debitCardArrangement1.getCards().add(card1);
-//        customer1.getCardArrangements().add(debitCardArrangement1);
-//        customerRepository.save(customer1);
-//
-//        var newCard = customerService.replaceCard("testCustomer1","testCard1");
-//        customerRepository.save(customer1);
-//
-//        var result = customer1.getCardArrangements().get(0).getCards().size();
-////        var result = customerRepository.findByCustomerNumber("testCustomer1").getCardArrangements().get(0).getCards().size();
-//
-//
-//        assertNotNull(newCard);
-////        assertEquals(2, result);
-//    }
 
     @Test
     void testCanReplaceCard() {
@@ -61,6 +42,22 @@ public class CustomerServiceImplTests {
         Card newCard = customerService.replaceCard(customer1.getCustomerNumber(), card1.getCardNumber());
 
         assertNotNull(newCard);
+    }
+
+    @Test
+    void testNewCardGetsAddedToCorrectCustomer() {
+        Customer customer1 = new Customer("testCustomer1", AuthorizationLevel.LEVEL_3, new ArrayList<>());
+        CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards", new ArrayList<>());
+        Card card1 = new Card("testCard1", LocalDate.of(2023, 6, 28), LocalDate.of(2028, 6, 28), Status.ACTIVE);
+        debitCardArrangement1.getCards().add(card1);
+        customer1.getCardArrangements().add(debitCardArrangement1);
+        customerRepository.save(customer1);
+
+        Card newCard = customerService.replaceCard(customer1.getCustomerNumber(), card1.getCardNumber());
+
+        Card result = customerService.getCustomerByCustomerNumber("testCustomer1").getCardArrangements().get(0).getCards().get(1);
+
+        assertEquals(newCard, result);
     }
 
     @org.junit.Test(expected = NullPointerException.class)

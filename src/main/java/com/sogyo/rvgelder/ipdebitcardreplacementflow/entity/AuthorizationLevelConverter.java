@@ -5,7 +5,7 @@ import jakarta.persistence.Converter;
 
 import java.util.stream.Stream;
 
-@Converter(/*autoApply = true*/)
+@Converter()
     public class AuthorizationLevelConverter implements AttributeConverter<AuthorizationLevel, Integer> {
 
         @Override

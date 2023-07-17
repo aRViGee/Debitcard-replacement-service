@@ -46,12 +46,9 @@ public class Customer {
 
 
     public Card replaceCard(Card card) {
-        if (card.getStartDate().isBefore(LocalDate.now()) && card.getStatus().equals(Status.ACTIVE)) {
-            if (this.cardReplacementIsValid(card) && (CustomerServiceImpl.isAuthorized(this.getCustomerNumber(), 3))) {
-                System.out.println("Card replacement is owner and allowed to replace");
-                System.out.println("Customer is authorized to replace");
+        if (card.getStartDate().isBefore(LocalDate.now()) && card.getStatus().equals(Status.ACTIVE) && (this.cardReplacementIsValid(card) && (CustomerServiceImpl.isAuthorized(this.getCustomerNumber(), 3)))) {
                 return this.fulfillReplaceCard(card);
-            }
+
         }
        return null;
     }
@@ -84,15 +81,13 @@ public class Customer {
     }
 
     private Card createNewDebitCard() {
-        Card card = new Card(cardNumberGenerator(), dateGenerator(7), dateGenerator((365*5)), Status.INACTIVE);
+        Card card = new Card(cardNumberGenerator(), dateGenerator(7), dateGenerator(((365*5)+7)), Status.INACTIVE);
         this.getCardArrangements().get(0).getCards().add(card);
-        System.out.println("New card has been created with card number: " + card.getCardNumber());
         return card;
     }
 
     private void setNewEndDateOldCard(Card card) {
         card.setEndDate(dateGenerator(14));
-        System.out.println("New end date has been set for current card: " + card.getEndDate());
     }
 
     private LocalDate dateGenerator(Integer days) {

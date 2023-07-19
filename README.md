@@ -1,6 +1,6 @@
-Doel project:
-Middels Spring Boot en ING Baker een service opzetten voor het replacen van een debitcard
-Endpoints aanmaken en organiseren voor de replace flow van een debitcard, middels ING Baker.
+Project goal:
+Create and orchestrate a service for replacing a debitcard, using Spring Boot.
+
 
 MoSCoW:
 - Must: 
@@ -17,22 +17,26 @@ MoSCoW:
 - Won't:
   - Adjust for leap years when setting an end date for a new card, using start date + 5 years.
 
+
 Software stack:
 - Java
 - Spring Boot
 - Hibernate
 - JPA
+- Maven
 - Swagger
 - H2
-- Maven
 - JUnit
 
-Persoonlijk leerdoel:
-- Planmatig werken aan een project. --> planning per sprint (week) en planning per dag. Alles geredeneerd vanuit een/het einddoel.
-- Op het juiste moment hulp vragen. --> min. 15 minuten, max. 30 minuten. of parkeren voor een later moment.
+
+  Technical goals:
+- Getting to know Spring (Boot) and using the tool to set up a service.
+~~- Get used to ING Baker (https://github.com/ing-bank/baker).~~
+- Integrating a service with a database.
 
 
-Technisch leerdoel:
-- Bekend raken met Spring Boot en het opzetten van een service middels deze tool.
-- ~~Bekend raken met ING Baker (https://github.com/ing-bank/baker)~~
-- Integratie met een database.
+  Personal goals:
+- Working the project according to a plan --> Planning through (weekly) sprints and daily tasks, all reasoned from the endgoals.
+- Ask for help at the right time --> Try to tackle the problem myself for at least 15 minutes, before asking for help, but only for a maximum of 30 minutes. Or park the problem for another time.
+
+

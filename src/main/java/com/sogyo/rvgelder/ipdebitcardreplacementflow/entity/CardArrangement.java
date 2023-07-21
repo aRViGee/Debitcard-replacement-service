@@ -1,10 +1,7 @@
 package com.sogyo.rvgelder.ipdebitcardreplacementflow.entity;
 
-
-
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,7 +12,7 @@ public class CardArrangement {
     private Long id;
 
     @Column(name = "cardArrangement_Type", nullable = false)
-    private String cardArrangementType; //TODO - Make this of type Enum ('Debit_Card', 'Credit_Card')
+    private String cardArrangementType;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER/*, targetEntity = Card.class*/)
     @JoinColumn(name = "card_arrangement_id")
     private List<Card> cards;

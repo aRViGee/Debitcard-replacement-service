@@ -13,7 +13,7 @@ public class CardArrangement {
 
     @Column(name = "cardArrangement_Type", nullable = false)
     private String cardArrangementType;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER/*, targetEntity = Card.class*/)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
     @JoinColumn(name = "card_arrangement_id")
     private List<Card> cards;
 

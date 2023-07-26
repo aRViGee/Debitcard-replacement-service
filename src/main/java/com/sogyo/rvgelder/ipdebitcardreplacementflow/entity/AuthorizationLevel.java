@@ -14,9 +14,9 @@ public enum AuthorizationLevel {
         this.level = level;
     }
 
-    public static boolean checkAllowedActions(AuthorizationLevel authorizationLevel) {
+    public static boolean checkAllowedActions(AuthorizationLevel authorizationLevel, AllowedActions action) {
         for (AllowedActions allowedAction: AllowedActions.createAllowedActionsList(authorizationLevel)) {
-            if (allowedAction.equals(AllowedActions.REPLACE)) {
+            if (allowedAction.equals(action)) {
                 return true;
             }
         }

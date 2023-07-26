@@ -15,9 +15,9 @@ public class AuthorizationLevelTests {
 
     @Test
     void testAuthorizationLevelGivesCorrectBoolean(){
-        assertFalse(AuthorizationLevel.checkAllowedActions(AuthorizationLevel.LEVEL_1));
-        assertTrue(AuthorizationLevel.checkAllowedActions(AuthorizationLevel.LEVEL_2));
-        assertTrue(AuthorizationLevel.checkAllowedActions(AuthorizationLevel.LEVEL_3));
+        assertFalse(AuthorizationLevel.checkAllowedActions(AuthorizationLevel.LEVEL_1, AllowedActions.REPLACE));
+        assertTrue(AuthorizationLevel.checkAllowedActions(AuthorizationLevel.LEVEL_2, AllowedActions.REPLACE));
+        assertTrue(AuthorizationLevel.checkAllowedActions(AuthorizationLevel.LEVEL_3, AllowedActions.REPLACE));
     }
 
 }

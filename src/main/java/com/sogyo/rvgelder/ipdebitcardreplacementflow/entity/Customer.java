@@ -71,7 +71,7 @@ public class Customer {
     }
 
     private boolean isAllowedToReplace() {
-        return AuthorizationLevel.checkAllowedActions(this.getAuthorizationLevel());
+        return AuthorizationLevel.checkAllowedActions(this.getAuthorizationLevel(),AllowedActions.REPLACE);
     }
 
     private Card fulfillReplaceCard(Card card) {

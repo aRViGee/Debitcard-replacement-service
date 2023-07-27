@@ -3,7 +3,6 @@ package com.sogyo.rvgelder.ipdebitcardreplacementflow.entity;
 import com.mifmif.common.regex.Generex;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.CustomerServiceImpl;
 import jakarta.persistence.*;
-import org.apache.commons.lang3.RandomStringUtils;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -82,18 +81,24 @@ public class Customer {
     }
 
     private Card createNewDebitCard() {
-        Card card = new Card(cardNumberGenerator(), dateGenerator(7), dateGenerator(((365*5)+7)), Status.INACTIVE);
+        Card card = new Card(cardNumberGenerator(), dateGeneratorForDays(7), dateGeneratorForYears(5), Status.INACTIVE);
         this.getCardArrangements().get(0).getCards().add(card);
         return card;
     }
 
     private void setNewEndDateOldCardOnFourteenDaysLater(Card card) {
-        card.setEndDate(dateGenerator(14));
+        card.setEndDate(dateGeneratorForDays(14));
     }
 
-    private LocalDate dateGenerator(Integer days) {
+    private LocalDate dateGeneratorForDays(Integer days) {
         return LocalDate.now().plusDays(days);
     }
+
+    private LocalDate dateGeneratorForYears(Integer years) {
+        var newStartDate = dateGeneratorForDays(7);
+        return newStartDate.plusYears(years);
+    }
+
 
     private String cardNumberGenerator() {
         Generex generex = new Generex("\\d{3}[A-HJ-NP-Z]\\d{3}");

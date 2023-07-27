@@ -1,5 +1,6 @@
 package com.sogyo.rvgelder.ipdebitcardreplacementflow.entity;
 
+import com.mifmif.common.regex.Generex;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.CustomerServiceImpl;
 import jakarta.persistence.*;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -76,7 +77,7 @@ public class Customer {
 
     private Card fulfillReplaceCard(Card card) {
         Card newCard = this.createNewDebitCard();
-        this.setNewEndDateOldCard(card);
+        this.setNewEndDateOldCardOnFourteenDaysLater(card);
         return newCard;
     }
 
@@ -86,7 +87,7 @@ public class Customer {
         return card;
     }
 
-    private void setNewEndDateOldCard(Card card) {
+    private void setNewEndDateOldCardOnFourteenDaysLater(Card card) {
         card.setEndDate(dateGenerator(14));
     }
 
@@ -95,11 +96,8 @@ public class Customer {
     }
 
     private String cardNumberGenerator() {
-        int length = 8;
-        boolean useLetters = true;
-        boolean useNumbers = true;
-
-        return RandomStringUtils.random(length, useLetters, useNumbers);
+        Generex generex = new Generex("\\d{3}[A-HJ-NP-Z]\\d{3}");
+        return generex.random();
     }
 
 }

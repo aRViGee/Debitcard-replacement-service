@@ -86,10 +86,6 @@ public class Customer {
         return card;
     }
 
-    private void setNewEndDateOldCardOnFourteenDaysLater(Card card) {
-        card.setEndDate(dateGeneratorForDays(14));
-    }
-
     private LocalDate dateGeneratorForDays(Integer days) {
         return LocalDate.now().plusDays(days);
     }
@@ -97,6 +93,10 @@ public class Customer {
     private LocalDate dateGeneratorForYears(Integer years) {
         var newStartDate = dateGeneratorForDays(7);
         return newStartDate.plusYears(years);
+    }
+
+    private void setNewEndDateOldCardOnFourteenDaysLater(Card card) {
+        card.setEndDate(dateGeneratorForDays(14));
     }
 
 

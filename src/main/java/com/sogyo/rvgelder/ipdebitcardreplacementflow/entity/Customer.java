@@ -1,6 +1,7 @@
 package com.sogyo.rvgelder.ipdebitcardreplacementflow.entity;
 
 import com.mifmif.common.regex.Generex;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CustomerNotOwnerOfCardException;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.CustomerServiceImpl;
 import jakarta.persistence.*;
 

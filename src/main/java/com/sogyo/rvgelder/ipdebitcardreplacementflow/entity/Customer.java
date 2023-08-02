@@ -1,12 +1,14 @@
 package com.sogyo.rvgelder.ipdebitcardreplacementflow.entity;
 
 import com.mifmif.common.regex.Generex;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CustomerNotAllowedToReplaceException;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CustomerNotOwnerOfCardException;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.CustomerServiceImpl;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.logging.Logger;
 
 
 @Entity
@@ -46,7 +48,7 @@ public class Customer {
     }
 
 
-    public Card replaceCard(Card card) {
+    public Card replaceCard(Card card) throws CustomerNotOwnerOfCardException, CustomerNotAllowedToReplaceException {
             if (startDateIsInPast(card) &&
                     statusIsNotInactive(card) &&
                     (this.cardReplacementIsValid(card))) {
@@ -66,11 +68,11 @@ public class Customer {
         return card.getStartDate().isBefore(LocalDate.now());
     }
 
-    private boolean cardReplacementIsValid(Card card) {
+    private boolean cardReplacementIsValid(Card card) throws CustomerNotOwnerOfCardException, CustomerNotAllowedToReplaceException {
         return (this.isOwnerOfCard(card)) && (this.isAllowedToReplace());
     }
 
-    private boolean isOwnerOfCard(Card card) {
+    private boolean isOwnerOfCard(Card card) throws CustomerNotOwnerOfCardException {
         for (CardArrangement cardArrangementResult: this.getCardArrangements()) {
             for (Card cardResult: cardArrangementResult.getCards()) {
                 if (cardResult.equals(card)){
@@ -78,11 +80,14 @@ public class Customer {
                 }
             }
         }
-        return false;
+        throw new CustomerNotOwnerOfCardException("You are not the owner of card " + card.getCardNumber());
     }
 
-    private boolean isAllowedToReplace() {
-        return AuthorizationLevel.checkAllowedActions(this.getAuthorizationLevel(),AllowedActions.REPLACE);
+    private boolean isAllowedToReplace() throws CustomerNotAllowedToReplaceException {
+        if(AuthorizationLevel.checkAllowedActions(this.getAuthorizationLevel(),AllowedActions.REPLACE)) {
+            return true;
+        }
+        throw new CustomerNotAllowedToReplaceException("You are not allowed to replace a card.");
     }
 
     private Card fulfillReplaceCard(Card card) {

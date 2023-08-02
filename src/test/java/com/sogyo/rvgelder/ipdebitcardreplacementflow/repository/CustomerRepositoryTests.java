@@ -1,6 +1,8 @@
 package com.sogyo.rvgelder.ipdebitcardreplacementflow.repository;
 
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.*;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CustomerNotAllowedToReplaceException;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CustomerNotOwnerOfCardException;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.CustomerServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +64,7 @@ public class CustomerRepositoryTests {
     }
 
     @Test
-    void testCanAddNewCard() {
+    void testCanAddNewCard() throws CustomerNotOwnerOfCardException, CustomerNotAllowedToReplaceException {
         Customer customer1 = new Customer("testCustomer1", AuthorizationLevel.LEVEL_3, new ArrayList<>());
         CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards", new ArrayList<>());
         Card card1 = new Card("testCard1", LocalDate.of(2023, 6, 28), LocalDate.of(2028, 6, 28), Status.ACTIVE);
@@ -78,7 +80,7 @@ public class CustomerRepositoryTests {
     }
 
     @Test
-    void testNewCardGetsAddedToCustomersDebitCardArrangement() {
+    void testNewCardGetsAddedToCustomersDebitCardArrangement() throws CustomerNotOwnerOfCardException, CustomerNotAllowedToReplaceException {
         Customer customer1 = new Customer("testCustomer1", AuthorizationLevel.LEVEL_3, new ArrayList<>());
         CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards",new ArrayList<>());
         Card card1 = new Card("testCard1", LocalDate.of(2023, 6,28), LocalDate.of(2028, 6,28), Status.ACTIVE);
@@ -94,7 +96,7 @@ public class CustomerRepositoryTests {
     }
 
     @Test
-    void testOldCardGetsNewEndDate() {
+    void testOldCardGetsNewEndDate() throws CustomerNotOwnerOfCardException, CustomerNotAllowedToReplaceException {
         Customer customer1 = new Customer("testCustomer1", AuthorizationLevel.LEVEL_3, new ArrayList<>());
         CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards", new ArrayList<>());
         Card card1 = new Card("testCard1", LocalDate.of(2023, 6, 28), LocalDate.of(2028, 6, 28), Status.ACTIVE);

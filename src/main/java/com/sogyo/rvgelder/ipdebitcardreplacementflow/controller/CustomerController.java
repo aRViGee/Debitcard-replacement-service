@@ -31,7 +31,8 @@ public class CustomerController {
             return "A new card has been added to your account, with card number: " + newCard.getCardNumber();
 
         } catch (Exception e) {
-            return "Card replacement failed for card with card number " + cardNumber + " and could not be replaced. \nPlease try again or contact customer service.";
+            return e.getMessage();
+//            return "Card replacement failed for card with card number " + cardNumber + " and could not be replaced. \nPlease try again or contact customer service.";
         }
     }
 }

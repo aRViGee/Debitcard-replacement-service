@@ -1,6 +1,8 @@
 package com.sogyo.rvgelder.ipdebitcardreplacementflow.service;
 
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.*;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CustomerNotAllowedToReplaceException;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CustomerNotOwnerOfCardException;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.repository.CardRepository;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,7 @@ public class CustomerServiceImpl implements CustomerService {
     private CardRepository cardRepository;
 
 
-    public Card replaceCard(String customerNumber, String cardNumber) {
+    public Card replaceCard(String customerNumber, String cardNumber) throws CustomerNotOwnerOfCardException, CustomerNotAllowedToReplaceException {
         Customer customer = getCustomerByCustomerNumber(customerNumber);
         Card card = getCardByCardNumber(cardNumber);
         Card newCard = customer.replaceCard(card);

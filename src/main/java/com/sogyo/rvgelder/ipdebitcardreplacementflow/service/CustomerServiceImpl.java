@@ -5,6 +5,7 @@ import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CustomerN
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CustomerNotOwnerOfCardException;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.repository.CardRepository;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.repository.CustomerRepository;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.exceptions.CustomerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,10 @@ public class CustomerServiceImpl implements CustomerService {
     private CardRepository cardRepository;
 
 
-    public Card replaceCard(String customerNumber, String cardNumber) throws CustomerNotOwnerOfCardException, CustomerNotAllowedToReplaceException {
+    public Card replaceCard(String customerNumber, String cardNumber)
+            throws CustomerNotOwnerOfCardException,
+            CustomerNotAllowedToReplaceException,
+            CustomerNotFoundException {
         Customer customer = getCustomerByCustomerNumber(customerNumber);
         Card card = getCardByCardNumber(cardNumber);
         Card newCard = customer.replaceCard(card);
@@ -32,8 +36,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer getCustomerByCustomerNumber(String customerNumber) {
-        return customerRepository.findByCustomerNumber(customerNumber);
+    public Customer getCustomerByCustomerNumber(String customerNumber) throws CustomerNotFoundException {
+        try {
+            return customerRepository.findByCustomerNumber(customerNumber);
+        } catch (CustomerNotFoundException cnfe) {
+            throw new CustomerNotFoundException("Incorrect customer number");
+        }
     }
 
     public static boolean isAuthorized(String customerNumber, Integer processId) {

@@ -5,6 +5,7 @@ import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.*;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CustomerNotAllowedToReplaceException;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CustomerNotOwnerOfCardException;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.repository.CustomerRepository;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.exceptions.CustomerNotFoundException;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class CustomerServiceImplTests {
 
 
     @Test
-    void testCanReplaceCard() throws CustomerNotOwnerOfCardException, CustomerNotAllowedToReplaceException {
+    void testCanReplaceCard() throws CustomerNotOwnerOfCardException, CustomerNotAllowedToReplaceException, CustomerNotFoundException {
         Customer customer1 = new Customer("testCustomer1",AuthorizationLevel.LEVEL_3, new ArrayList<>());
         CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards",new ArrayList<>());
         Card card1 = new Card("testCard1", LocalDate.of(2023, 6,28), LocalDate.of(2028, 6,28),Status.ACTIVE);
@@ -47,7 +48,10 @@ public class CustomerServiceImplTests {
     }
 
     @Test
-    void testNewCardGetsAddedToCorrectCustomer() throws CustomerNotOwnerOfCardException, CustomerNotAllowedToReplaceException {
+    void testNewCardGetsAddedToCorrectCustomer()
+            throws CustomerNotOwnerOfCardException,
+            CustomerNotAllowedToReplaceException,
+            CustomerNotFoundException {
         Customer customer1 = new Customer("testCustomer1", AuthorizationLevel.LEVEL_3, new ArrayList<>());
         CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards", new ArrayList<>());
         Card card1 = new Card("testCard1", LocalDate.of(2023, 6, 28), LocalDate.of(2028, 6, 28), Status.ACTIVE);
@@ -63,7 +67,7 @@ public class CustomerServiceImplTests {
     }
 
     @org.junit.Test(expected = NullPointerException.class)
-    public void testCannotReplaceWhenCustomerNumberIsIncorrect() throws CustomerNotOwnerOfCardException, CustomerNotAllowedToReplaceException {
+    public void testCannotReplaceWhenCustomerNumberIsIncorrect() throws CustomerNotOwnerOfCardException, CustomerNotAllowedToReplaceException, CustomerNotFoundException {
         Customer customer1 = new Customer("testCustomer1",AuthorizationLevel.LEVEL_3, new ArrayList<>());
         CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards",new ArrayList<>());
         Card card1 = new Card("testCard1", LocalDate.of(2023, 6,28), LocalDate.of(2028, 6,28),Status.ACTIVE);
@@ -77,7 +81,7 @@ public class CustomerServiceImplTests {
     }
 
     @org.junit.Test(expected = NullPointerException.class)
-    public void testCannotReplaceWhenCardNumberIsIncorrect() throws CustomerNotOwnerOfCardException, CustomerNotAllowedToReplaceException {
+    public void testCannotReplaceWhenCardNumberIsIncorrect() throws CustomerNotOwnerOfCardException, CustomerNotAllowedToReplaceException, CustomerNotFoundException {
         Customer customer1 = new Customer("testCustomer1",AuthorizationLevel.LEVEL_3, new ArrayList<>());
         CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards",new ArrayList<>());
         Card card1 = new Card("testCard1", LocalDate.of(2023, 6,28), LocalDate.of(2028, 6,28),Status.ACTIVE);
@@ -91,7 +95,7 @@ public class CustomerServiceImplTests {
     }
 
     @org.junit.Test(expected = NullPointerException.class)
-    public void testCannotReplaceWhenCustomerNotOwnerOfCard() throws CustomerNotOwnerOfCardException, CustomerNotAllowedToReplaceException {
+    public void testCannotReplaceWhenCustomerNotOwnerOfCard() throws CustomerNotOwnerOfCardException, CustomerNotAllowedToReplaceException, CustomerNotFoundException {
         Customer customer1 = new Customer("testCustomer1",AuthorizationLevel.LEVEL_3, new ArrayList<>());
         CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards",new ArrayList<>());
         Card card1 = new Card("testCard1", LocalDate.of(2023, 6,28), LocalDate.of(2028, 6,28),Status.ACTIVE);

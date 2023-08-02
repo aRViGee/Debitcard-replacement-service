@@ -3,6 +3,7 @@ package com.sogyo.rvgelder.ipdebitcardreplacementflow.controller;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.Card;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.Customer;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.CustomerService;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.exceptions.CustomerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class CustomerController {
     }
 
     @GetMapping(path = "/CustomerByNumber")
-    public Customer getCustomer(@RequestParam String customerNumber) {
+    public Customer getCustomer(@RequestParam String customerNumber) throws CustomerNotFoundException {
         return customerService.getCustomerByCustomerNumber(customerNumber);
     }
 

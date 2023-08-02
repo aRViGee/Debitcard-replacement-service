@@ -47,13 +47,23 @@ public class Customer {
 
 
     public Card replaceCard(Card card) {
-        if (card.getStartDate().isBefore(LocalDate.now()) && !(card.getStatus().equals(Status.INACTIVE))
-                && (this.cardReplacementIsValid(card)
-                && (CustomerServiceImpl.isAuthorized(this.getCustomerNumber(), 3)))) {
-                return this.fulfillReplaceCard(card);
+            if (startDateIsInPast(card) &&
+                    statusIsNotInactive(card) &&
+                    (this.cardReplacementIsValid(card))) {
+                if (CustomerServiceImpl.isAuthorized(this.getCustomerNumber(), 3)) {
+                    return this.fulfillReplaceCard(card);
+                }
 
-        }
-       return null;
+            }
+            return null;
+    }
+
+    private static boolean statusIsNotInactive(Card card) {
+        return !card.getStatus().equals(Status.INACTIVE);
+    }
+
+    private static boolean startDateIsInPast(Card card) {
+        return card.getStartDate().isBefore(LocalDate.now());
     }
 
     private boolean cardReplacementIsValid(Card card) {

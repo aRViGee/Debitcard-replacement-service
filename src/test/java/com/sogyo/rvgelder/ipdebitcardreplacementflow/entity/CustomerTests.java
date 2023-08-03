@@ -1,9 +1,6 @@
 package com.sogyo.rvgelder.ipdebitcardreplacementflow.entity;
 
-import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CardNotCreatedException;
-import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CustomerNotAllowedToReplaceException;
-import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CustomerNotOwnerOfCardException;
-import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.NewEndDateOldCardNotSetException;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.*;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.repository.CustomerRepository;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.exceptions.CustomerNotAuthorizedException;
 import org.junit.jupiter.api.Test;
@@ -32,7 +29,9 @@ public class CustomerTests {
             CustomerNotAllowedToReplaceException,
             CustomerNotAuthorizedException,
             NewEndDateOldCardNotSetException,
-            CardNotCreatedException {
+            CardNotCreatedException,
+            StartDateInThePastException,
+            CardIsInactiveException {
         Customer customer1 = new Customer("testCustomer1",AuthorizationLevel.LEVEL_3, new ArrayList<>());
         CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards",new ArrayList<>());
         Card card1 = new Card("testCard1", LocalDate.of(2023, 6,28), LocalDate.of(2028, 6,28),Status.ACTIVE);
@@ -51,7 +50,9 @@ public class CustomerTests {
             CustomerNotAllowedToReplaceException,
             CustomerNotAuthorizedException,
             NewEndDateOldCardNotSetException,
-            CardNotCreatedException {
+            CardNotCreatedException,
+            StartDateInThePastException,
+            CardIsInactiveException {
         Customer customer1 = new Customer("testCustomer1", AuthorizationLevel.LEVEL_3, new ArrayList<>());
         CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards", new ArrayList<>());
         Card card1 = new Card("testCard1", LocalDate.of(2023, 6, 28), LocalDate.of(2028, 6, 28), Status.ACTIVE);
@@ -72,7 +73,9 @@ public class CustomerTests {
             CustomerNotAllowedToReplaceException,
             CustomerNotAuthorizedException,
             NewEndDateOldCardNotSetException,
-            CardNotCreatedException {
+            CardNotCreatedException,
+            StartDateInThePastException,
+            CardIsInactiveException {
         Customer customer1 = new Customer("testCustomer1", AuthorizationLevel.LEVEL_3, new ArrayList<>());
         CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards", new ArrayList<>());
         Card card1 = new Card("testCard1", LocalDate.of(2023, 8, 28), LocalDate.of(2028, 6, 28), Status.ACTIVE);
@@ -91,7 +94,9 @@ public class CustomerTests {
             CustomerNotAllowedToReplaceException,
             CustomerNotAuthorizedException,
             NewEndDateOldCardNotSetException,
-            CardNotCreatedException {
+            CardNotCreatedException,
+            StartDateInThePastException,
+            CardIsInactiveException {
         Customer customer1 = new Customer("testCustomer1", AuthorizationLevel.LEVEL_3, new ArrayList<>());
         CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards", new ArrayList<>());
         Card card1 = new Card("testCard1", LocalDate.of(2023, 6, 28), LocalDate.of(2028, 6, 28), Status.INACTIVE);
@@ -110,7 +115,9 @@ public class CustomerTests {
             CustomerNotAllowedToReplaceException,
             CustomerNotAuthorizedException,
             NewEndDateOldCardNotSetException,
-            CardNotCreatedException {
+            CardNotCreatedException,
+            StartDateInThePastException,
+            CardIsInactiveException {
         Customer customer1 = new Customer("testCustomer1", AuthorizationLevel.LEVEL_3, new ArrayList<>());
         CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards", new ArrayList<>());
         Card card1 = new Card("testCard1", LocalDate.of(2023, 6, 28), LocalDate.of(2028, 6, 28), Status.EXPIRED);
@@ -130,7 +137,9 @@ public class CustomerTests {
             CustomerNotAllowedToReplaceException,
             CustomerNotAuthorizedException,
             NewEndDateOldCardNotSetException,
-            CardNotCreatedException {
+            CardNotCreatedException,
+            StartDateInThePastException,
+            CardIsInactiveException {
         Customer customer1 = new Customer("testCustomer1",AuthorizationLevel.LEVEL_1, new ArrayList<>());
         CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards",new ArrayList<>());
         Card card1 = new Card("testCard1", LocalDate.of(2023, 6,28), LocalDate.of(2028, 6,28),Status.ACTIVE);

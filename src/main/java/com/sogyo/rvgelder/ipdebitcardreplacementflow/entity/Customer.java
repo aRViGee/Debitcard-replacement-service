@@ -1,17 +1,13 @@
 package com.sogyo.rvgelder.ipdebitcardreplacementflow.entity;
 
 import com.mifmif.common.regex.Generex;
-import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CardNotCreatedException;
-import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CustomerNotAllowedToReplaceException;
-import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CustomerNotOwnerOfCardException;
-import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.NewEndDateOldCardNotSetException;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.*;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.CustomerServiceImpl;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.exceptions.CustomerNotAuthorizedException;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.logging.Logger;
 
 
 @Entity
@@ -56,7 +52,9 @@ public class Customer {
             CustomerNotAllowedToReplaceException,
             CustomerNotAuthorizedException,
             CardNotCreatedException,
-            NewEndDateOldCardNotSetException {
+            NewEndDateOldCardNotSetException,
+            CardIsInactiveException,
+            StartDateInThePastException {
             if (startDateIsInPast(card) &&
                     statusIsNotInactive(card) &&
                     (this.cardReplacementIsValid(card))) {
@@ -68,12 +66,18 @@ public class Customer {
             return null;
     }
 
-    private static boolean statusIsNotInactive(Card card) {
-        return !card.getStatus().equals(Status.INACTIVE);
+    private static boolean statusIsNotInactive(Card card) throws CardIsInactiveException {
+        if (!card.getStatus().equals(Status.INACTIVE)) {
+            return true;
+        }
+        throw new CardIsInactiveException("This card is inactive and can't be replaced yet");
     }
 
-    private static boolean startDateIsInPast(Card card) {
-        return card.getStartDate().isBefore(LocalDate.now());
+    private static boolean startDateIsInPast(Card card) throws StartDateInThePastException {
+        if (card.getStartDate().isBefore(LocalDate.now())) {
+            return true;
+        }
+        throw new StartDateInThePastException("This card's start date is in the future and can't be replaced yet.");
     }
 
     private boolean cardReplacementIsValid(Card card) throws CustomerNotOwnerOfCardException, CustomerNotAllowedToReplaceException {
@@ -88,7 +92,7 @@ public class Customer {
                 }
             }
         }
-        throw new CustomerNotOwnerOfCardException("You are not the owner of card " + card.getCardNumber());
+        throw new CustomerNotOwnerOfCardException("You do not own a card with card number " + card.getCardNumber());
     }
 
     private boolean isAllowedToReplace() throws CustomerNotAllowedToReplaceException {

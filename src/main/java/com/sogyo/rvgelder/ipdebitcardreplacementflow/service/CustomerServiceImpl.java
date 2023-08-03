@@ -1,10 +1,7 @@
 package com.sogyo.rvgelder.ipdebitcardreplacementflow.service;
 
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.*;
-import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CardNotCreatedException;
-import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CustomerNotAllowedToReplaceException;
-import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CustomerNotOwnerOfCardException;
-import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.NewEndDateOldCardNotSetException;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.*;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.repository.CardRepository;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.repository.CustomerRepository;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.exceptions.CardNotFoundException;
@@ -32,7 +29,9 @@ public class CustomerServiceImpl implements CustomerService {
             CustomerNotAuthorizedException,
             CustomerNotSavedException,
             NewEndDateOldCardNotSetException,
-            CardNotCreatedException {
+            CardNotCreatedException,
+            StartDateInThePastException,
+            CardIsInactiveException {
 
         Customer customer = getCustomerByCustomerNumber(customerNumber);
         Card card = getCardByCardNumber(cardNumber);
@@ -51,7 +50,7 @@ public class CustomerServiceImpl implements CustomerService {
             throws CardNotFoundException {
         Card card = cardRepository.findByCardNumber(cardNumber);
         if (card == null) {
-            throw new CardNotFoundException("Card not found for card number: " + cardNumber);
+            throw new CardNotFoundException("You do not own a card with card number " + cardNumber);
         }
         return card;
     }
@@ -61,7 +60,7 @@ public class CustomerServiceImpl implements CustomerService {
             throws CustomerNotFoundException {
         Customer customer = customerRepository.findByCustomerNumber(customerNumber);
         if (customer == null) {
-            throw new CustomerNotFoundException("Customer not found for customer number: " + customerNumber);
+            throw new CustomerNotFoundException("Customer with customer number " + customerNumber + " not found.");
         }
         return customer;
     }

@@ -2,10 +2,7 @@ package com.sogyo.rvgelder.ipdebitcardreplacementflow.service;
 
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.controller.CustomerController;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.*;
-import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CardNotCreatedException;
-import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CustomerNotAllowedToReplaceException;
-import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CustomerNotOwnerOfCardException;
-import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.NewEndDateOldCardNotSetException;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.*;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.repository.CustomerRepository;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.exceptions.CardNotFoundException;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.exceptions.CustomerNotAuthorizedException;
@@ -47,7 +44,9 @@ public class CustomerServiceImplTests {
             CustomerNotAuthorizedException,
             CustomerNotSavedException,
             NewEndDateOldCardNotSetException,
-            CardNotCreatedException {
+            CardNotCreatedException,
+            StartDateInThePastException,
+            CardIsInactiveException {
         Customer customer1 = new Customer("testCustomer1",AuthorizationLevel.LEVEL_3, new ArrayList<>());
         CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards",new ArrayList<>());
         Card card1 = new Card("testCard1", LocalDate.of(2023, 6,28), LocalDate.of(2028, 6,28),Status.ACTIVE);
@@ -69,7 +68,9 @@ public class CustomerServiceImplTests {
             CustomerNotAuthorizedException,
             CustomerNotSavedException,
             NewEndDateOldCardNotSetException,
-            CardNotCreatedException {
+            CardNotCreatedException,
+            StartDateInThePastException,
+            CardIsInactiveException {
         Customer customer1 = new Customer("testCustomer1", AuthorizationLevel.LEVEL_3, new ArrayList<>());
         CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards", new ArrayList<>());
         Card card1 = new Card("testCard1", LocalDate.of(2023, 6, 28), LocalDate.of(2028, 6, 28), Status.ACTIVE);
@@ -93,7 +94,9 @@ public class CustomerServiceImplTests {
             CustomerNotAuthorizedException,
             CustomerNotSavedException,
             NewEndDateOldCardNotSetException,
-            CardNotCreatedException {
+            CardNotCreatedException,
+            StartDateInThePastException,
+            CardIsInactiveException {
         Customer customer1 = new Customer("testCustomer1",AuthorizationLevel.LEVEL_3, new ArrayList<>());
         CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards",new ArrayList<>());
         Card card1 = new Card("testCard1", LocalDate.of(2023, 6,28), LocalDate.of(2028, 6,28),Status.ACTIVE);
@@ -115,7 +118,9 @@ public class CustomerServiceImplTests {
             CustomerNotAuthorizedException,
             CustomerNotSavedException,
             NewEndDateOldCardNotSetException,
-            CardNotCreatedException {
+            CardNotCreatedException,
+            StartDateInThePastException,
+            CardIsInactiveException {
         Customer customer1 = new Customer("testCustomer1",AuthorizationLevel.LEVEL_3, new ArrayList<>());
         CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards",new ArrayList<>());
         Card card1 = new Card("testCard1", LocalDate.of(2023, 6,28), LocalDate.of(2028, 6,28),Status.ACTIVE);
@@ -137,7 +142,9 @@ public class CustomerServiceImplTests {
             CustomerNotAuthorizedException,
             CustomerNotSavedException,
             NewEndDateOldCardNotSetException,
-            CardNotCreatedException {
+            CardNotCreatedException,
+            StartDateInThePastException,
+            CardIsInactiveException {
         Customer customer1 = new Customer("testCustomer1",AuthorizationLevel.LEVEL_3, new ArrayList<>());
         CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards",new ArrayList<>());
         Card card1 = new Card("testCard1", LocalDate.of(2023, 6,28), LocalDate.of(2028, 6,28),Status.ACTIVE);

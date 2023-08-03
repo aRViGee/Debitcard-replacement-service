@@ -1,9 +1,12 @@
 package com.sogyo.rvgelder.ipdebitcardreplacementflow.entity;
 
 import com.mifmif.common.regex.Generex;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CardNotCreatedException;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CustomerNotAllowedToReplaceException;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CustomerNotOwnerOfCardException;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.NewEndDateOldCardNotSetException;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.CustomerServiceImpl;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.exceptions.CustomerNotAuthorizedException;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -48,7 +51,12 @@ public class Customer {
     }
 
 
-    public Card replaceCard(Card card) throws CustomerNotOwnerOfCardException, CustomerNotAllowedToReplaceException {
+    public Card replaceCard(Card card)
+            throws CustomerNotOwnerOfCardException,
+            CustomerNotAllowedToReplaceException,
+            CustomerNotAuthorizedException,
+            CardNotCreatedException,
+            NewEndDateOldCardNotSetException {
             if (startDateIsInPast(card) &&
                     statusIsNotInactive(card) &&
                     (this.cardReplacementIsValid(card))) {
@@ -90,16 +98,22 @@ public class Customer {
         throw new CustomerNotAllowedToReplaceException("You are not allowed to replace a card.");
     }
 
-    private Card fulfillReplaceCard(Card card) {
+    private Card fulfillReplaceCard(Card card)
+            throws CardNotCreatedException,
+            NewEndDateOldCardNotSetException {
         Card newCard = this.createNewDebitCard();
         this.setNewEndDateOldCardOnFourteenDaysLater(card);
         return newCard;
     }
 
-    private Card createNewDebitCard() {
-        Card card = new Card(cardNumberGenerator(), dateGeneratorForDays(7), dateGeneratorForYears(5), Status.INACTIVE);
-        this.getCardArrangements().get(0).getCards().add(card);
-        return card;
+    private Card createNewDebitCard() throws CardNotCreatedException {
+        try {
+            Card card = new Card(cardNumberGenerator(), dateGeneratorForDays(7), dateGeneratorForYears(5), Status.INACTIVE);
+            this.getCardArrangements().get(0).getCards().add(card);
+            return card;
+        } catch (Exception e) {
+            throw new CardNotCreatedException("Replacement card could not be created or added to customer");
+        }
     }
 
     private LocalDate dateGeneratorForDays(Integer days) {
@@ -111,8 +125,12 @@ public class Customer {
         return newStartDate.plusYears(years);
     }
 
-    private void setNewEndDateOldCardOnFourteenDaysLater(Card card) {
-        card.setEndDate(dateGeneratorForDays(14));
+    private void setNewEndDateOldCardOnFourteenDaysLater(Card card) throws NewEndDateOldCardNotSetException {
+        try {
+            card.setEndDate(dateGeneratorForDays(14));
+        } catch (Exception e) {
+            throw new NewEndDateOldCardNotSetException("A new end date for current card " + card.getCardNumber() + " could not be set");
+        }
     }
 
 

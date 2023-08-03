@@ -2,10 +2,15 @@ package com.sogyo.rvgelder.ipdebitcardreplacementflow.service;
 
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.controller.CustomerController;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.*;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CardNotCreatedException;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CustomerNotAllowedToReplaceException;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.CustomerNotOwnerOfCardException;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.exceptions.NewEndDateOldCardNotSetException;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.repository.CustomerRepository;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.exceptions.CardNotFoundException;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.exceptions.CustomerNotAuthorizedException;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.exceptions.CustomerNotFoundException;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.exceptions.CustomerNotSavedException;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +39,15 @@ public class CustomerServiceImplTests {
 
 
     @Test
-    void testCanReplaceCard() throws CustomerNotOwnerOfCardException, CustomerNotAllowedToReplaceException, CustomerNotFoundException {
+    void testCanReplaceCard()
+            throws CustomerNotOwnerOfCardException,
+            CustomerNotAllowedToReplaceException,
+            CustomerNotFoundException,
+            CardNotFoundException,
+            CustomerNotAuthorizedException,
+            CustomerNotSavedException,
+            NewEndDateOldCardNotSetException,
+            CardNotCreatedException {
         Customer customer1 = new Customer("testCustomer1",AuthorizationLevel.LEVEL_3, new ArrayList<>());
         CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards",new ArrayList<>());
         Card card1 = new Card("testCard1", LocalDate.of(2023, 6,28), LocalDate.of(2028, 6,28),Status.ACTIVE);
@@ -51,7 +64,12 @@ public class CustomerServiceImplTests {
     void testNewCardGetsAddedToCorrectCustomer()
             throws CustomerNotOwnerOfCardException,
             CustomerNotAllowedToReplaceException,
-            CustomerNotFoundException {
+            CustomerNotFoundException,
+            CardNotFoundException,
+            CustomerNotAuthorizedException,
+            CustomerNotSavedException,
+            NewEndDateOldCardNotSetException,
+            CardNotCreatedException {
         Customer customer1 = new Customer("testCustomer1", AuthorizationLevel.LEVEL_3, new ArrayList<>());
         CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards", new ArrayList<>());
         Card card1 = new Card("testCard1", LocalDate.of(2023, 6, 28), LocalDate.of(2028, 6, 28), Status.ACTIVE);
@@ -67,7 +85,15 @@ public class CustomerServiceImplTests {
     }
 
     @org.junit.Test(expected = NullPointerException.class)
-    public void testCannotReplaceWhenCustomerNumberIsIncorrect() throws CustomerNotOwnerOfCardException, CustomerNotAllowedToReplaceException, CustomerNotFoundException {
+    public void testCannotReplaceWhenCustomerNumberIsIncorrect()
+            throws CustomerNotOwnerOfCardException,
+            CustomerNotAllowedToReplaceException,
+            CustomerNotFoundException,
+            CardNotFoundException,
+            CustomerNotAuthorizedException,
+            CustomerNotSavedException,
+            NewEndDateOldCardNotSetException,
+            CardNotCreatedException {
         Customer customer1 = new Customer("testCustomer1",AuthorizationLevel.LEVEL_3, new ArrayList<>());
         CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards",new ArrayList<>());
         Card card1 = new Card("testCard1", LocalDate.of(2023, 6,28), LocalDate.of(2028, 6,28),Status.ACTIVE);
@@ -81,7 +107,15 @@ public class CustomerServiceImplTests {
     }
 
     @org.junit.Test(expected = NullPointerException.class)
-    public void testCannotReplaceWhenCardNumberIsIncorrect() throws CustomerNotOwnerOfCardException, CustomerNotAllowedToReplaceException, CustomerNotFoundException {
+    public void testCannotReplaceWhenCardNumberIsIncorrect()
+            throws CustomerNotOwnerOfCardException,
+            CustomerNotAllowedToReplaceException,
+            CustomerNotFoundException,
+            CardNotFoundException,
+            CustomerNotAuthorizedException,
+            CustomerNotSavedException,
+            NewEndDateOldCardNotSetException,
+            CardNotCreatedException {
         Customer customer1 = new Customer("testCustomer1",AuthorizationLevel.LEVEL_3, new ArrayList<>());
         CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards",new ArrayList<>());
         Card card1 = new Card("testCard1", LocalDate.of(2023, 6,28), LocalDate.of(2028, 6,28),Status.ACTIVE);
@@ -95,7 +129,15 @@ public class CustomerServiceImplTests {
     }
 
     @org.junit.Test(expected = NullPointerException.class)
-    public void testCannotReplaceWhenCustomerNotOwnerOfCard() throws CustomerNotOwnerOfCardException, CustomerNotAllowedToReplaceException, CustomerNotFoundException {
+    public void testCannotReplaceWhenCustomerNotOwnerOfCard()
+            throws CustomerNotOwnerOfCardException,
+            CustomerNotAllowedToReplaceException,
+            CustomerNotFoundException,
+            CardNotFoundException,
+            CustomerNotAuthorizedException,
+            CustomerNotSavedException,
+            NewEndDateOldCardNotSetException,
+            CardNotCreatedException {
         Customer customer1 = new Customer("testCustomer1",AuthorizationLevel.LEVEL_3, new ArrayList<>());
         CardArrangement debitCardArrangement1 = new CardArrangement("Debit cards",new ArrayList<>());
         Card card1 = new Card("testCard1", LocalDate.of(2023, 6,28), LocalDate.of(2028, 6,28),Status.ACTIVE);

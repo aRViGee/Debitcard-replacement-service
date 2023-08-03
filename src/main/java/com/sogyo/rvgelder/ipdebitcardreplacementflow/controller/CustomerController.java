@@ -3,7 +3,10 @@ package com.sogyo.rvgelder.ipdebitcardreplacementflow.controller;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.Card;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.entity.Customer;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.CustomerService;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.exceptions.CardNotFoundException;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.exceptions.CustomerNotAuthorizedException;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.exceptions.CustomerNotFoundException;
+import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.exceptions.CustomerNotSavedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +30,6 @@ public class CustomerController {
             return ResponseEntity.ok(customer);
         } catch (CustomerNotFoundException exception) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
-
         }
         catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred.");
@@ -40,8 +42,14 @@ public class CustomerController {
             Card newCard = customerService.replaceCard(customerNumber, cardNumber);
             return ResponseEntity.status(HttpStatus.CREATED).body("A new card has been added to your account, with card number: " + newCard.getCardNumber());
 
+        } catch (CardNotFoundException | CustomerNotFoundException | CustomerNotAuthorizedException exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+
+        } catch (CustomerNotSavedException exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error creating card: " + exception.getMessage() + "." + "\nCard replacement failed for card with card number " + cardNumber + " and could not be replaced. \nPlease try again or contact customer service.");
+
         } catch (Exception exception) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating card: " + exception.getMessage() + "." + "\nCard replacement failed for card with card number " + cardNumber + " and could not be replaced. \nPlease try again or contact customer service.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error server side");
         }
     }
 }

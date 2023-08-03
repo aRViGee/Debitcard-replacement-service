@@ -37,12 +37,13 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer getCustomerByCustomerNumber(String customerNumber) throws CustomerNotFoundException {
-        try {
-            return customerRepository.findByCustomerNumber(customerNumber);
-        } catch (CustomerNotFoundException cnfe) {
-            throw new CustomerNotFoundException("Incorrect customer number");
+        Customer customer = customerRepository.findByCustomerNumber(customerNumber);
+        if (customer == null) {
+            throw new CustomerNotFoundException("Customer not found for customer number: " + customerNumber);
         }
+        return customer;
     }
+
 
     public static boolean isAuthorized(String customerNumber, Integer processId) {
         return true;

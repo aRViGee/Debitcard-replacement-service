@@ -6,10 +6,11 @@ import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.CustomerService;
 import com.sogyo.rvgelder.ipdebitcardreplacementflow.service.exceptions.CustomerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/replace")
+@RequestMapping(path = "/")
 public class CustomerController {
 
     private CustomerService customerService;
@@ -19,21 +20,28 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @GetMapping(path = "/CustomerByNumber")
-    public Customer getCustomer(@RequestParam String customerNumber) throws CustomerNotFoundException {
-        return customerService.getCustomerByCustomerNumber(customerNumber);
+    @GetMapping(path = "/customers/number")
+    public ResponseEntity<?> getCustomer(@RequestParam String customerNumber) {
+        try {
+            Customer customer = customerService.getCustomerByCustomerNumber(customerNumber);
+            return ResponseEntity.ok(customer);
+        } catch (CustomerNotFoundException exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+
+        }
+        catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred.");
+        }
     }
 
-    @GetMapping(path = "/replaceDebitCard")
-//    @ResponseStatus(code = HttpStatus.CREATED, reason = "A new card has been created")
-    public String replaceDebitCard(@RequestParam String customerNumber, String cardNumber) {
+    @GetMapping(path = "/replace/debitCard")
+    public ResponseEntity<String> replaceDebitCard(@RequestParam String customerNumber, String cardNumber) {
         try {
             Card newCard = customerService.replaceCard(customerNumber, cardNumber);
-            return "A new card has been added to your account, with card number: " + newCard.getCardNumber();
+            return ResponseEntity.status(HttpStatus.CREATED).body("A new card has been added to your account, with card number: " + newCard.getCardNumber());
 
-        } catch (Exception e) {
-            return e.getMessage();
-//            return "Card replacement failed for card with card number " + cardNumber + " and could not be replaced. \nPlease try again or contact customer service.";
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating card: " + exception.getMessage() + "." + "\nCard replacement failed for card with card number " + cardNumber + " and could not be replaced. \nPlease try again or contact customer service.");
         }
     }
 }

@@ -14,9 +14,9 @@ MoSCoW:
 - Should:
   - AllowedActions is determined by the AuthorizationLevel.
   - Exception handling and server response code is based on where the process fails.
+  - Adjust for leap year(s) when setting an end date for a new card, using start date + 5 years.
 
 - Could:
-  - Adjust for leap year(s) when setting an end date for a new card, using start date + 5 years.
   - Use enums for Card arrangement types.
 
 - Won't:
